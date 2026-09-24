@@ -22,6 +22,7 @@ describe('BudgetBasics app shell', () => {
     cleanup()
     vi.useRealTimers()
     vi.restoreAllMocks()
+    vi.unstubAllGlobals()
   })
 
   it('renders the complete home page', () => {
@@ -77,6 +78,28 @@ describe('BudgetBasics app shell', () => {
     fireEvent.scroll(window)
     await userEvent.click(screen.getByRole('button', { name: /back to top/i }))
     expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' })
+  })
+
+  it('uses instant back-to-top scrolling when reduced motion is preferred', async () => {
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+    renderApp()
+    window.scrollY = 500
+    fireEvent.scroll(window)
+    await userEvent.click(screen.getByRole('button', { name: /back to top/i }))
+    expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'auto' })
+  })
+
+  it('closes the mobile menu when a non-primary link changes location', async () => {
+    const user = userEvent.setup()
+    renderApp('/privacy')
+    const toggle = screen.getByRole('button', { name: /navigation menu/i })
+    await user.click(toggle)
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
+
+    await user.click(screen.getByRole('navigation', { name: /legal/i }).querySelector('a[href="/sitemap"]'))
+    expect(screen.getByRole('heading', { level: 1, name: /sitemap/i })).toBeInTheDocument()
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
   })
 
   it('increments the session-only demonstration count once in StrictMode', () => {

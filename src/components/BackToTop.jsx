@@ -11,5 +11,10 @@ export default function BackToTop() {
   }, [])
 
   if (!visible) return null
-  return <button className="back-top" type="button" aria-label="Back to top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><ArrowUp aria-hidden="true" /></button>
+  const scrollToTop = () => {
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' })
+  }
+
+  return <button className="back-top" type="button" aria-label="Back to top" onClick={scrollToTop}><ArrowUp aria-hidden="true" /></button>
 }

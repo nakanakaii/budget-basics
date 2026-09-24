@@ -1,12 +1,19 @@
 import { Menu, Search, X } from 'lucide-react'
-import { useState } from 'react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { primaryLinks } from '../data/navigation.js'
 import BackToTop from './BackToTop.jsx'
 import Logo from './Logo.jsx'
 
 export default function AppShell() {
   const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    let current = true
+    queueMicrotask(() => current && setOpen(false))
+    return () => { current = false }
+  }, [pathname])
 
   return (
     <div className="site-shell">
