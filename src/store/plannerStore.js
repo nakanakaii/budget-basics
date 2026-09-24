@@ -1,4 +1,5 @@
 import { createStore } from 'zustand/vanilla'
+import { create } from 'zustand'
 
 const totals = (entries) => {
   const totalIncome = entries.filter(({ type }) => type === 'income').reduce((sum, { amount }) => sum + amount, 0)
@@ -6,9 +7,9 @@ const totals = (entries) => {
   return { entries, totalIncome, totalExpenses, balance: totalIncome - totalExpenses }
 }
 
-export const createPlannerStore = () => {
+const createPlannerState = () => {
   let nextId = 1
-  const store = createStore((set, get) => ({
+  return (set, get) => ({
     ...totals([]),
     add: (entry) => {
       const saved = { ...entry, id: `entry-${nextId++}` }
@@ -32,7 +33,11 @@ export const createPlannerStore = () => {
       nextId = 1
       set(totals([]))
     },
-  }))
+  })
+}
+
+export const createPlannerStore = () => {
+  const store = createStore(createPlannerState())
 
   return Object.assign(store, {
     add: (...args) => store.getState().add(...args),
@@ -43,3 +48,4 @@ export const createPlannerStore = () => {
 }
 
 export const plannerStore = createPlannerStore()
+export const usePlannerStore = create(createPlannerState())

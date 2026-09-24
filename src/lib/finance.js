@@ -30,8 +30,8 @@ export const savingsGoal = ({ target, current, monthly }) => {
 export const expenseSummary = (income, expenses) => {
   money(income, 'Income')
   if (!Array.isArray(expenses)) throw new TypeError('Expenses must be an array')
-  expenses.forEach((expense) => money(expense, 'Expense'))
-  const total = expenses.reduce((sum, expense) => sum + expense, 0)
+  const amounts = expenses.map((expense) => money(typeof expense === 'number' ? expense : expense?.amount, 'Expense'))
+  const total = amounts.reduce((sum, amount) => sum + amount, 0)
   const remaining = income - total
 
   return { total, remaining, overspent: remaining < 0 }

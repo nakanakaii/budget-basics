@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { createPlannerStore, plannerStore } from './plannerStore.js'
+import { createPlannerStore, plannerStore, usePlannerStore } from './plannerStore.js'
 
 describe('plannerStore', () => {
   beforeEach(() => plannerStore.reset())
@@ -38,5 +38,13 @@ describe('plannerStore', () => {
     expect(first.getState().totalIncome).toBe(100)
     expect(second.getState().totalIncome).toBe(0)
     expect(typeof first.subscribe).toBe('function')
+  })
+
+  it('exports a React-compatible Zustand hook', () => {
+    usePlannerStore.getState().reset()
+    const entry = usePlannerStore.getState().add({ type: 'income', category: 'Job', amount: 75 })
+
+    expect(entry.id).toBe('entry-1')
+    expect(usePlannerStore.getState().totalIncome).toBe(75)
   })
 })

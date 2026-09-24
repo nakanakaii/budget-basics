@@ -14,10 +14,22 @@ describe('searchContent', () => {
   })
 
   it('filters by topic and sorts by title', () => {
-    expect(searchContent(entries, 'save', 'saving').map(({ title }) => title)).toEqual([
+    expect(searchContent(entries, 'save', 'saving', 'title').map(({ title }) => title)).toEqual([
       'Automatic saving',
       'Emergency fund',
     ])
+  })
+
+  it('treats all as no topic filter', () => {
+    expect(searchContent(entries, '', 'all', 'title').map(({ title }) => title)).toEqual([
+      'Automatic saving',
+      'Emergency fund',
+      'Zero-based budget',
+    ])
+  })
+
+  it('searches resource descriptions', () => {
+    expect(searchContent(resources, 'part-time').map(({ id }) => id)).toEqual(['student-budget'])
   })
 
   it('provides distinct routed learning resources', () => {
