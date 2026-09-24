@@ -22,6 +22,17 @@ describe('interactive learning pages', () => {
     expect(screen.getByRole('status')).toHaveTextContent(/not quite.*snacks can change/i)
   })
 
+  it('renders the six canonical budget concepts with student examples', () => {
+    renderPage('/budgeting-basics')
+    const concepts = screen.getByRole('region', { name: /six building blocks/i })
+    for (const name of ['Income', 'Fixed expenses', 'Variable expenses', 'Needs', 'Wants', 'Savings']) {
+      expect(within(concepts).getByRole('heading', { name })).toBeInTheDocument()
+    }
+    expect(within(concepts).getAllByText(/student example:/i)).toHaveLength(6)
+    expect(within(concepts).getByText(/mona earns 1,200 sar/i)).toBeInTheDocument()
+    expect(within(concepts).getByText(/saves 300 sar toward a laptop/i)).toBeInTheDocument()
+  })
+
   it('classifies needs and wants with reasoning', async () => {
     const user = userEvent.setup()
     renderPage('/needs-vs-wants')
@@ -41,6 +52,16 @@ describe('interactive learning pages', () => {
     expect(trigger).toHaveAttribute('aria-expanded', 'true')
     expect(screen.getByText(/corrective action/i)).toBeInTheDocument()
     expect(within(screen.getByRole('region', { name: /common money mistakes/i })).getAllByRole('button')).toHaveLength(5)
+  })
+
+  it('explains every money mistake', async () => {
+    const user = userEvent.setup()
+    renderPage('/money-mistakes')
+    const accordion = screen.getByRole('region', { name: /common money mistakes/i })
+    for (const trigger of within(accordion).getAllByRole('button')) {
+      await user.click(trigger)
+      expect(within(accordion).getByText('Explanation:')).toBeInTheDocument()
+    }
   })
 
   it('filters searchable infographic cards and resets a real empty state', async () => {

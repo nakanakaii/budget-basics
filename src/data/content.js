@@ -1,10 +1,10 @@
 export const concepts = [
-  { id: 'income', title: 'Income', summary: 'Money you receive from work, allowance, gifts, or a small business.', studentExample: 'Mona earns 600 SAR from a weekend job.' },
-  { id: 'expenses', title: 'Expenses', summary: 'Money you spend on needs and wants.', studentExample: 'Mona spends 80 SAR on transport and 40 SAR on snacks.' },
-  { id: 'budget', title: 'Budget', summary: 'A plan that gives each part of your income a purpose.', studentExample: 'Mona plans her 600 SAR before the month begins.' },
-  { id: 'needs-wants', title: 'Needs and wants', summary: 'Needs are essential; wants are optional improvements.', studentExample: 'A bus pass is a need; a second pair of headphones is a want.' },
-  { id: 'saving', title: 'Saving', summary: 'Money kept for a goal or unexpected cost.', studentExample: 'Mona saves 60 SAR each month for a laptop.' },
-  { id: 'goals', title: 'Financial goals', summary: 'Specific money targets with an amount and deadline.', studentExample: 'Save 600 SAR for a course in ten months.' },
+  { id: 'income', title: 'Income', summary: 'Money you receive, such as wages, allowance, or gifts.', studentExample: 'Mona earns 1,200 SAR from weekend work.' },
+  { id: 'fixed-expenses', title: 'Fixed expenses', summary: 'Costs that stay the same each month.', studentExample: 'Her transport pass costs 200 SAR every month.' },
+  { id: 'variable-expenses', title: 'Variable expenses', summary: 'Costs that can change from month to month.', studentExample: 'Her snack spending changes depending on her schedule.' },
+  { id: 'needs', title: 'Needs', summary: 'Essentials required for daily life, health, or study.', studentExample: 'Basic groceries and transport to class come first.' },
+  { id: 'wants', title: 'Wants', summary: 'Optional purchases that improve life but can wait.', studentExample: 'A concert ticket is enjoyable but not essential.' },
+  { id: 'savings', title: 'Savings', summary: 'Money set aside for goals or unexpected costs.', studentExample: 'Mona saves 300 SAR toward a laptop.' },
 ]
 
 export const quiz = [
@@ -21,11 +21,11 @@ export const needsAndWants = [
 ]
 
 export const moneyMistakes = [
-  { title: 'Spending before planning', scenario: 'Allowance arrives and is spent in the first week.', consequence: 'No money remains for transport.', action: 'Set category limits on payday.', tip: 'Plan before the first purchase.' },
-  { title: 'Ignoring small purchases', scenario: 'Daily drinks are never recorded.', consequence: 'The monthly total is surprising.', action: 'Record purchases immediately.', tip: 'Small costs still count.' },
-  { title: 'Saving only leftovers', scenario: 'Saving waits until month end.', consequence: 'Nothing is usually left.', action: 'Move savings first.', tip: 'Treat saving like a bill.' },
-  { title: 'Buying under pressure', scenario: 'A limited-time offer triggers a quick purchase.', consequence: 'A higher-priority goal is delayed.', action: 'Wait 24 hours before optional purchases.', tip: 'Urgency is often marketing.' },
-  { title: 'No emergency buffer', scenario: 'A device repair appears unexpectedly.', consequence: 'Money must be borrowed.', action: 'Build a small emergency fund.', tip: 'Start small and contribute regularly.' },
+  { title: 'Impulse buying', explanation: 'Unplanned purchases trade a longer-term priority for a brief feeling of urgency.', scenario: 'A flash sale makes you buy headphones you did not plan for.', consequence: 'Your savings goal is delayed.', action: 'Wait 24 hours and compare the purchase with your priorities.', prevention: 'Remove saved payment details and keep a wish list.' },
+  { title: 'Ignoring small expenses', explanation: 'Frequent small costs are easy to overlook but can consume a meaningful share of income.', scenario: 'Daily drinks and snacks go unrecorded.', consequence: 'Small costs become a large monthly total.', action: 'Review recent transactions and add them to the plan.', prevention: 'Record purchases immediately or check spending weekly.' },
+  { title: 'Late payments', explanation: 'Missing a due date turns an ordinary bill into a more expensive problem.', scenario: 'A phone bill is forgotten past its due date.', consequence: 'Fees grow and service may be interrupted.', action: 'Pay the bill and contact the provider if help is needed.', prevention: 'Use calendar reminders or automatic payments.' },
+  { title: 'Unused subscriptions', explanation: 'Automatic renewals can hide spending on services that no longer provide value.', scenario: 'A streaming service renews even though nobody watches it.', consequence: 'Money leaves the account without providing value.', action: 'Cancel the service and check for a refund policy.', prevention: 'Review subscriptions every month.' },
+  { title: 'Spending without a plan', explanation: 'Without category limits, early choices can leave essential later costs unfunded.', scenario: 'Allowance is spent during the first week.', consequence: 'Nothing remains for transport and study costs.', action: 'List income and protect essential categories first.', prevention: 'Make a simple budget before spending begins.' },
 ]
 
 export const tips = [
