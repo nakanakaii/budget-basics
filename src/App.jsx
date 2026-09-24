@@ -9,6 +9,9 @@ import MoneyMistakesPage from './pages/MoneyMistakesPage.jsx'
 import NeedsWantsPage from './pages/NeedsWantsPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
 import SitemapPage from './pages/SitemapPage.jsx'
+import BudgetCalculatorPage from './pages/BudgetCalculatorPage.jsx'
+import SavingsGoalsPage from './pages/SavingsGoalsPage.jsx'
+import ExpensePlannerPage from './pages/ExpensePlannerPage.jsx'
 
 function Placeholder({ name }) {
   return <PageHero eyebrow="Learning module" title={`${name} module coming soon`}><p>This area is reserved for the upcoming {name.toLowerCase()} learning module.</p></PageHero>
@@ -23,7 +26,10 @@ function App() {
         <Route path="needs-vs-wants" element={<NeedsWantsPage />} />
         <Route path="money-mistakes" element={<MoneyMistakesPage />} />
         <Route path="infographics" element={<InfographicsPage />} />
-        {primaryLinks.slice(1).filter(([, path]) => !['/budgeting-basics', '/needs-vs-wants', '/money-mistakes', '/infographics'].includes(path)).map(([name, path]) => <Route key={path} path={path} element={<Placeholder name={name} />} />)}
+        <Route path="50-30-20" element={<BudgetCalculatorPage />} />
+        <Route path="savings-goals" element={<SavingsGoalsPage />} />
+        <Route path="expense-planner" element={<ExpensePlannerPage />} />
+        {primaryLinks.slice(1).filter(([, path]) => !['/budgeting-basics', '/needs-vs-wants', '/money-mistakes', '/infographics', '/50-30-20', '/savings-goals', '/expense-planner'].includes(path)).map(([name, path]) => <Route key={path} path={path} element={<Placeholder name={name} />} />)}
         <Route path="search" element={<Placeholder name="Search" />} />
         <Route path="sitemap" element={<SitemapPage />} />
         <Route path="privacy" element={<PrivacyPage />} />
