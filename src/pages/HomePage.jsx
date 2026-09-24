@@ -1,4 +1,5 @@
 import { ArrowRight, Lightbulb, PiggyBank, Scale, WalletCards } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import LocalClock from '../components/LocalClock.jsx'
 import PageHero from '../components/PageHero.jsx'
@@ -12,17 +13,16 @@ const actions = [
   ['Plan my expenses', '/expense-planner', Lightbulb],
 ]
 
-function getVisits() {
-  const visits = Number(sessionStorage.getItem('budgetBasicsVisits') || 0) + 1
-  sessionStorage.setItem('budgetBasicsVisits', visits)
-  return visits
-}
-
 export default function HomePage() {
-  const visits = getVisits()
+  const [visits] = useState(() => Number(sessionStorage.getItem('budgetBasicsVisits') || 0) + 1)
+
+  useEffect(() => {
+    sessionStorage.setItem('budgetBasicsVisits', visits)
+  }, [visits])
+
   return (
     <>
-      <PageHero eyebrow="Money confidence starts here" title="Make your money work for you">
+      <PageHero eyebrow="Money confidence starts here" title="Build a budget that works for you">
         <p className="hero-copy">Welcome to BudgetBasics — clear, judgment-free lessons that help you plan spending, save toward goals, and make thoughtful choices.</p>
         <LocalClock />
         <p className="visit-count">Session-only demonstration visit count: {visits}</p>

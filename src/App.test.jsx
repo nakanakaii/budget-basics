@@ -1,8 +1,10 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { StrictMode } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App.jsx'
+import LocalClock from './components/LocalClock.jsx'
 
 const renderApp = (path = '/') => render(
   <MemoryRouter initialEntries={[path]}>
@@ -18,6 +20,7 @@ describe('BudgetBasics app shell', () => {
 
   afterEach(() => {
     cleanup()
+    vi.useRealTimers()
     vi.restoreAllMocks()
   })
 
@@ -25,7 +28,7 @@ describe('BudgetBasics app shell', () => {
     renderApp()
 
     expect(screen.getAllByLabelText(/budgetbasics home/i).length).toBeGreaterThan(0)
-    expect(screen.getByRole('heading', { level: 1, name: /make your money work for you/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: /build a budget/i })).toBeInTheDocument()
     expect(screen.getByText(/local time/i)).toBeInTheDocument()
     expect(screen.getByText(/session-only demonstration visit count: 1/i)).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /featured tips/i })).toBeInTheDocument()
@@ -74,5 +77,34 @@ describe('BudgetBasics app shell', () => {
     fireEvent.scroll(window)
     await userEvent.click(screen.getByRole('button', { name: /back to top/i }))
     expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' })
+  })
+
+  it('increments the session-only demonstration count once in StrictMode', () => {
+    render(
+      <StrictMode>
+        <MemoryRouter>
+          <App />
+        </MemoryRouter>
+      </StrictMode>,
+    )
+
+    expect(screen.getByText(/session-only demonstration visit count: 1/i)).toBeInTheDocument()
+    expect(sessionStorage.getItem('budgetBasicsVisits')).toBe('1')
+  })
+
+  it('updates local time and clears its timer on unmount', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2026-09-24T09:00:00Z'))
+    const clearInterval = vi.spyOn(window, 'clearInterval')
+    const { unmount } = render(<LocalClock />)
+    const initial = screen.getByRole('time').textContent
+
+    act(() => {
+      vi.setSystemTime(new Date('2026-09-24T09:01:00Z'))
+      vi.advanceTimersByTime(1000)
+    })
+    expect(screen.getByRole('time').textContent).not.toBe(initial)
+    unmount()
+    expect(clearInterval).toHaveBeenCalled()
   })
 })
