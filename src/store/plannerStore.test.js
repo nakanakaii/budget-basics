@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { plannerStore } from './plannerStore.js'
+import { createPlannerStore, plannerStore } from './plannerStore.js'
 
 describe('plannerStore', () => {
   beforeEach(() => plannerStore.reset())
@@ -26,7 +26,17 @@ describe('plannerStore', () => {
     plannerStore.add({ type: 'income', category: 'Job', amount: 100 })
     plannerStore.reset()
 
-    expect(plannerStore.getState()).toEqual({ entries: [], totalIncome: 0, totalExpenses: 0, balance: 0 })
+    expect(plannerStore.getState()).toMatchObject({ entries: [], totalIncome: 0, totalExpenses: 0, balance: 0 })
     expect(plannerStore.add({ type: 'income', category: 'Job', amount: 1 }).id).toBe('entry-1')
+  })
+
+  it('creates isolated Zustand stores', () => {
+    const first = createPlannerStore()
+    const second = createPlannerStore()
+    first.getState().add({ type: 'income', category: 'Job', amount: 100 })
+
+    expect(first.getState().totalIncome).toBe(100)
+    expect(second.getState().totalIncome).toBe(0)
+    expect(typeof first.subscribe).toBe('function')
   })
 })

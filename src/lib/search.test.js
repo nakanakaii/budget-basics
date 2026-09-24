@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { searchContent } from './search.js'
+import { resources } from '../data/content.js'
 
 const entries = [
   { title: 'Zero-based budget', topic: 'budgeting', keywords: ['plan', 'income'] },
@@ -17,5 +18,11 @@ describe('searchContent', () => {
       'Automatic saving',
       'Emergency fund',
     ])
+  })
+
+  it('provides distinct routed learning resources', () => {
+    expect(new Set(resources.map(({ id }) => id)).size).toBe(resources.length)
+    expect(resources.every(({ path, description }) => path.startsWith('/') && description.length > 20)).toBe(true)
+    expect(resources.some(({ title }) => title === 'Plan a student budget')).toBe(true)
   })
 })

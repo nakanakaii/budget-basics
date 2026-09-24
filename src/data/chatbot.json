@@ -1,12 +1,42 @@
 [
   {
+    "topic": "fundamentals",
+    "keywords": ["fundamental", "personal finance basics"],
+    "answer": "Personal finance starts with understanding income, tracking expenses, planning a budget, and saving toward clear goals."
+  },
+  {
+    "topic": "income-expenses",
+    "keywords": ["income and expenses", "income vs expenses", "income", "expenses differ"],
+    "answer": "Income is money received; expenses are money spent. A sustainable plan keeps expenses within income."
+  },
+  {
+    "topic": "saving-goals",
+    "keywords": ["savings goal", "saving goal", "set a goal"],
+    "answer": "Choose a target and date, subtract what you already have, then divide the remainder into manageable monthly contributions."
+  },
+  {
+    "topic": "50-30-20",
+    "keywords": ["50/30/20", "50-30-20", "50 30 20"],
+    "answer": "The 50/30/20 guide assigns 50% to needs, 30% to wants, and 20% to savings. Adjust it to your situation."
+  },
+  {
+    "topic": "money-mistakes",
+    "keywords": ["money mistake", "financial mistake"],
+    "answer": "Common mistakes include spending before planning, ignoring small purchases, and waiting to save whatever is left."
+  },
+  {
+    "topic": "student-habits",
+    "keywords": ["money habits", "student habits", "habits help students"],
+    "answer": "Helpful student habits include checking balances, recording purchases, comparing prices, and saving a small amount regularly."
+  },
+  {
     "topic": "saving",
     "keywords": ["save", "saving", "emergency fund"],
     "answer": "Start with a small amount you can repeat. A common guide is 20% of income, adjusted for your essentials."
   },
   {
     "topic": "budgeting",
-    "keywords": ["budget", "50/30/20", "spending plan"],
+    "keywords": ["budget", "spending plan"],
     "answer": "List your income, cover needs first, choose limits for wants, and reserve money for savings."
   },
   {

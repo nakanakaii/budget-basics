@@ -1,11 +1,18 @@
-export const splitBudget = (income) => ({
-  income,
-  needs: income * 0.5,
-  wants: income * 0.3,
-  savings: income * 0.2,
-})
+const money = (value, label) => {
+  if (typeof value !== 'number' || !Number.isFinite(value)) throw new TypeError(`${label} must be a finite number`)
+  if (value < 0) throw new RangeError(`${label} must be zero or more`)
+  return value
+}
+
+export const splitBudget = (income) => {
+  money(income, 'Income')
+  return { income, needs: income * 0.5, wants: income * 0.3, savings: income * 0.2 }
+}
 
 export const savingsGoal = ({ target, current, monthly }) => {
+  money(target, 'Target')
+  money(current, 'Current savings')
+  money(monthly, 'Monthly contribution')
   const remaining = Math.max(target - current, 0)
   const complete = remaining === 0
 
@@ -21,6 +28,9 @@ export const savingsGoal = ({ target, current, monthly }) => {
 }
 
 export const expenseSummary = (income, expenses) => {
+  money(income, 'Income')
+  if (!Array.isArray(expenses)) throw new TypeError('Expenses must be an array')
+  expenses.forEach((expense) => money(expense, 'Expense'))
   const total = expenses.reduce((sum, expense) => sum + expense, 0)
   const remaining = income - total
 
