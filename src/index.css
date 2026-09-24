@@ -11,7 +11,7 @@
   --shadow-lg: 0 18px 50px rgb(23 63 53 / 16%);
   --radius-sm: 0.5rem;
   --radius-lg: 1.25rem;
-  --focus-ring: 0 0 0 3px rgb(230 173 60 / 45%);
+  --focus-ring: #9a6700;
   color: var(--ink);
   background: var(--cream);
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
@@ -41,8 +41,8 @@ textarea {
 }
 
 :focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
 }
 
 main {
