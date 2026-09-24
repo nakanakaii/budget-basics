@@ -3,12 +3,22 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it } from 'vitest'
 import App from '../App.jsx'
+import { resources } from '../data/content.js'
 
 const renderPage = (path) => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
 
 afterEach(cleanup)
 
 describe('interactive learning pages', () => {
+  it('links learning resources to registered app routes', () => {
+    expect(Object.fromEntries(resources.map(({ id, path }) => [id, path]))).toMatchObject({
+      'student-budget': '/budgeting-basics',
+      'spending-check': '/needs-vs-wants',
+      'goal-steps': '/savings-goals',
+      'mistake-review': '/money-mistakes',
+    })
+  })
+
   it('explains a quiz answer and allows a retry', async () => {
     const user = userEvent.setup()
     renderPage('/budgeting-basics')
@@ -69,7 +79,13 @@ describe('interactive learning pages', () => {
     renderPage('/infographics')
     expect(screen.getAllByRole('img')).toHaveLength(4)
     expect(screen.getByText(/50% needs, 30% wants, and 20% savings/i)).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: /saving challenges/i }))
+    const all = screen.getByRole('button', { name: /all topics/i })
+    const saving = screen.getByRole('button', { name: /saving challenges/i })
+    expect(all).toHaveAttribute('aria-pressed', 'true')
+    expect(saving).toHaveAttribute('aria-pressed', 'false')
+    await user.click(saving)
+    expect(all).toHaveAttribute('aria-pressed', 'false')
+    expect(saving).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getAllByRole('img')).toHaveLength(1)
     await user.type(screen.getByRole('searchbox', { name: /search infographics/i }), 'unfindable')
     expect(screen.getByText(/no infographics match/i)).toBeInTheDocument()
