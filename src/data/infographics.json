@@ -1,0 +1,6 @@
+[
+  { "topic": "50-30-20", "title": "The 50/30/20 split", "steps": ["50% needs", "30% wants", "20% savings"] },
+  { "topic": "needs-vs-wants", "title": "Needs or wants?", "steps": ["Protect essentials", "Pause optional spending", "Recheck priorities"] },
+  { "topic": "savings-goal", "title": "Build a savings goal", "steps": ["Set a target", "Choose a monthly amount", "Track progress"] },
+  { "topic": "expense-tracking", "title": "Track every expense", "steps": ["Record it", "Group it", "Review weekly"] }
+]

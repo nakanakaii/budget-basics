@@ -1,0 +1,28 @@
+import { describe, expect, it } from 'vitest'
+import { expenseSummary, savingsGoal, splitBudget } from './finance.js'
+
+describe('finance', () => {
+  it('splits income using the 50/30/20 rule', () => {
+    expect(splitBudget(1000)).toEqual({ income: 1000, needs: 500, wants: 300, savings: 200 })
+  })
+
+  it('calculates a savings goal', () => {
+    expect(savingsGoal({ target: 1000, current: 250, monthly: 200 })).toEqual({
+      target: 1000, current: 250, monthly: 200, remaining: 750, months: 4, progress: 25, complete: false,
+    })
+  })
+
+  it('caps an overfunded savings goal', () => {
+    expect(savingsGoal({ target: 1000, current: 1200, monthly: 0 })).toMatchObject({
+      remaining: 0, months: 0, progress: 100, complete: true,
+    })
+  })
+
+  it('uses null months when an incomplete goal has no monthly contribution', () => {
+    expect(savingsGoal({ target: 1000, current: 250, monthly: 0 }).months).toBeNull()
+  })
+
+  it('summarizes expenses', () => {
+    expect(expenseSummary(1000, [200, 350])).toEqual({ total: 550, remaining: 450, overspent: false })
+  })
+})

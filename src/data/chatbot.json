@@ -1,0 +1,27 @@
+[
+  {
+    "topic": "saving",
+    "keywords": ["save", "saving", "emergency fund"],
+    "answer": "Start with a small amount you can repeat. A common guide is 20% of income, adjusted for your essentials."
+  },
+  {
+    "topic": "budgeting",
+    "keywords": ["budget", "50/30/20", "spending plan"],
+    "answer": "List your income, cover needs first, choose limits for wants, and reserve money for savings."
+  },
+  {
+    "topic": "needs-wants",
+    "keywords": ["need", "want", "essential"],
+    "answer": "A need supports basic living, study, or safety. A want improves comfort but can usually wait."
+  },
+  {
+    "topic": "debt",
+    "keywords": ["debt", "loan", "credit"],
+    "answer": "Pay at least the minimum on every debt, then direct extra money to one balance at a time."
+  },
+  {
+    "topic": "fallback",
+    "keywords": [],
+    "answer": "I can help with budgeting, saving, needs and wants, or basic debt questions. For personal financial advice, speak with a qualified professional."
+  }
+]
