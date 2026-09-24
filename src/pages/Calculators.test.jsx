@@ -33,6 +33,17 @@ describe('budget calculator', () => {
     expect(screen.getByRole('alert')).toBeInTheDocument()
     expect(screen.queryByText(/Needs \(50%\)/)).not.toBeInTheDocument()
   })
+
+  it('clears a calculated budget when income changes', async () => {
+    const user = userEvent.setup()
+    renderPage('/50-30-20')
+    const income = screen.getByLabelText(/monthly income/i)
+    await user.type(income, '1000')
+    await user.click(screen.getByRole('button', { name: /calculate budget/i }))
+    expect(screen.getByText('SAR 500.00')).toBeInTheDocument()
+    await user.type(income, '0')
+    expect(screen.queryByText('SAR 500.00')).not.toBeInTheDocument()
+  })
 })
 
 describe('savings goals calculator', () => {
@@ -90,5 +101,14 @@ describe('savings goals calculator', () => {
     await completeForm(user, { name: 'Laptop', target, current: '0', monthly: '100' })
     expect(screen.getByRole('alert')).toBeInTheDocument()
     expect(screen.queryByText(/Infinity|NaN/)).not.toBeInTheDocument()
+  })
+
+  it('clears a savings estimate when any goal input changes', async () => {
+    const user = userEvent.setup()
+    renderPage('/savings-goals')
+    await completeForm(user, { name: 'Laptop', target: '1000', current: '250', monthly: '200' })
+    expect(screen.getByText(/SAR 750.00 remaining/i)).toBeInTheDocument()
+    await user.type(screen.getByLabelText(/current savings/i), '0')
+    expect(screen.queryByText(/SAR 750.00 remaining/i)).not.toBeInTheDocument()
   })
 })

@@ -55,6 +55,24 @@ describe('expense planner', () => {
     renderPage()
     await user.click(screen.getByRole('button', { name: /add expense/i }))
     expect(screen.getAllByRole('alert')).toHaveLength(4)
+    for (const label of ['Date', 'Category', 'Description', 'Amount']) {
+      const field = screen.getByLabelText(new RegExp(`^${label}`, 'i'))
+      expect(field).toHaveAttribute('aria-invalid', 'true')
+      expect(field).toHaveAttribute('aria-describedby', `${field.id}-error`)
+      expect(document.getElementById(`${field.id}-error`)).toHaveAttribute('role', 'alert')
+    }
+  })
+
+  it('cancels editing when the edited expense is deleted and allows a fresh add', async () => {
+    const user = userEvent.setup()
+    renderPage()
+    await addExpense(user)
+    await user.click(screen.getByRole('button', { name: /edit lunch/i }))
+    await user.click(screen.getByRole('button', { name: /delete lunch/i }))
+    expect(screen.getByRole('heading', { name: /add an expense/i })).toBeInTheDocument()
+    expect(screen.getByLabelText(/^description/i)).toHaveValue('')
+    await addExpense(user, { description: 'Dinner', amount: '60' })
+    expect(screen.getByText('Dinner')).toBeInTheDocument()
   })
 
   it.each(['', '-1', 'not-a-number', 'Infinity'])('rejects invalid sample income %j without showing a misleading summary', async (value) => {
