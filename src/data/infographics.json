@@ -1,6 +1,6 @@
 [
-  { "topic": "50-30-20", "title": "The 50/30/20 split", "steps": ["50% needs", "30% wants", "20% savings"] },
-  { "topic": "needs-vs-wants", "title": "Needs or wants?", "steps": ["Protect essentials", "Pause optional spending", "Recheck priorities"] },
-  { "topic": "savings-goal", "title": "Build a savings goal", "steps": ["Set a target", "Choose a monthly amount", "Track progress"] },
-  { "topic": "expense-tracking", "title": "Track every expense", "steps": ["Record it", "Group it", "Review weekly"] }
+  { "topic": "needs-vs-wants", "title": "Needs or wants?", "caption": "A three-question pause separates essentials from optional spending.", "steps": ["Is it necessary?", "Does it fit the budget?", "Can it wait?"] },
+  { "topic": "50-30-20", "title": "The 50/30/20 split", "caption": "A flexible guide: 50% needs, 30% wants, and 20% savings.", "steps": ["Protect needs", "Set a wants limit", "Save consistently"] },
+  { "topic": "budget-cycle", "title": "Monthly budget cycle", "caption": "Budgeting repeats, so each review improves the next plan.", "steps": ["Plan income", "Track spending", "Review and adjust"] },
+  { "topic": "saving-challenges", "title": "Saving challenges", "caption": "Small repeatable challenges help turn saving into a habit.", "steps": ["Choose a target", "Save a small amount", "Celebrate progress"] }
 ]

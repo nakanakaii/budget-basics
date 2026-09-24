@@ -60,7 +60,7 @@ describe('BudgetBasics app shell', () => {
     const navigation = screen.getByRole('navigation', { name: /primary/i })
     expect(navigation.querySelectorAll('a')).toHaveLength(12)
     expect(navigation.querySelector('a[href="/budgeting-basics"]')).toHaveAttribute('aria-current', 'page')
-    expect(screen.getByRole('heading', { name: /budgeting basics module coming soon/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /budgeting basics/i })).toBeInTheDocument()
   })
 
   it.each([
