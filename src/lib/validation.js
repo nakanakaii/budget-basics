@@ -24,7 +24,7 @@ export const plannerEntrySchema = z.object({
 
 export const sampleIncomeSchema = z.object({
   label: required('Income label'),
-  amount: money('Amount').positive('Amount must be greater than zero'),
+  amount: money('Amount'),
 })
 
 export const feedbackSchema = z.object({

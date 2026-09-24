@@ -84,10 +84,10 @@ describe('savings goals calculator', () => {
     expect(screen.queryByText(/Infinity|NaN/)).not.toBeInTheDocument()
   })
 
-  it('rejects non-numeric savings values', async () => {
+  it.each(['many', 'Infinity'])('rejects non-finite savings value %j', async (target) => {
     const user = userEvent.setup()
     renderPage('/savings-goals')
-    await completeForm(user, { name: 'Laptop', target: 'many', current: '0', monthly: '100' })
+    await completeForm(user, { name: 'Laptop', target, current: '0', monthly: '100' })
     expect(screen.getByRole('alert')).toBeInTheDocument()
     expect(screen.queryByText(/Infinity|NaN/)).not.toBeInTheDocument()
   })

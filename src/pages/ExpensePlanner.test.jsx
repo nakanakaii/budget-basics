@@ -57,6 +57,32 @@ describe('expense planner', () => {
     expect(screen.getAllByRole('alert')).toHaveLength(4)
   })
 
+  it.each(['', '-1', 'not-a-number', 'Infinity'])('rejects invalid sample income %j without showing a misleading summary', async (value) => {
+    const user = userEvent.setup()
+    renderPage()
+    const income = screen.getByLabelText(/sample monthly income/i)
+    if (value) await user.type(income, value)
+    else await user.click(income)
+    await user.tab()
+    expect(screen.getByRole('alert')).toBeInTheDocument()
+    expect(screen.queryByText(/total expenses:/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/remaining:/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/NaN|Infinity|SAR\s*0\.00/i)).not.toBeInTheDocument()
+  })
+
+  it.each(['-1', 'not-a-number', 'Infinity'])('rejects invalid expense amount %j', async (value) => {
+    const user = userEvent.setup()
+    renderPage()
+    await user.type(screen.getByLabelText(/^date/i), '2026-09-24')
+    await user.selectOptions(screen.getByLabelText(/^category/i), 'Food')
+    await user.type(screen.getByLabelText(/^description/i), 'Lunch')
+    await user.type(screen.getByLabelText(/^amount/i), value)
+    await user.click(screen.getByRole('button', { name: /add expense/i }))
+    expect(screen.getByRole('alert')).toBeInTheDocument()
+    expect(screen.getByText(/no expenses yet/i)).toBeInTheDocument()
+    expect(screen.queryByText(/NaN|Infinity/)).not.toBeInTheDocument()
+  })
+
   it('resets the temporary plan after confirmation', async () => {
     const user = userEvent.setup()
     vi.spyOn(window, 'confirm').mockReturnValue(true)
