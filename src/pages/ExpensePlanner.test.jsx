@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from '../App.jsx'
 import { usePlannerStore } from '../store/plannerStore.js'
 
-const renderPage = () => render(<MemoryRouter initialEntries={['/expense-planner']}><App /></MemoryRouter>)
+const renderPage = () => render(<MemoryRouter initialEntries={['/practice/expense-planner']}><App /></MemoryRouter>)
 
 const addExpense = async (user, { date = '2026-09-24', category = 'Food', description = 'Lunch', amount = '50' } = {}) => {
   await user.type(screen.getByLabelText(/^date/i), date)

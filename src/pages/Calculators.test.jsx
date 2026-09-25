@@ -11,7 +11,7 @@ afterEach(cleanup)
 describe('budget calculator', () => {
   it('calculates the 50/30/20 amounts for a valid income', async () => {
     const user = userEvent.setup()
-    renderPage('/50-30-20')
+    renderPage('/budget-calculator')
     await user.type(screen.getByLabelText(/monthly income/i), '1000')
     await user.click(screen.getByRole('button', { name: /calculate budget/i }))
 
@@ -27,7 +27,7 @@ describe('budget calculator', () => {
 
   it.each(['', '-1', 'not-a-number', 'Infinity'])('rejects invalid income %j', async (value) => {
     const user = userEvent.setup()
-    renderPage('/50-30-20')
+    renderPage('/budget-calculator')
     if (value) await user.type(screen.getByLabelText(/monthly income/i), value)
     await user.click(screen.getByRole('button', { name: /calculate budget/i }))
     expect(screen.getByRole('alert')).toBeInTheDocument()
@@ -36,7 +36,7 @@ describe('budget calculator', () => {
 
   it('clears a calculated budget when income changes', async () => {
     const user = userEvent.setup()
-    renderPage('/50-30-20')
+    renderPage('/budget-calculator')
     const income = screen.getByLabelText(/monthly income/i)
     await user.type(income, '1000')
     await user.click(screen.getByRole('button', { name: /calculate budget/i }))
@@ -57,7 +57,7 @@ describe('savings goals calculator', () => {
 
   it('shows remaining amount, rounded-up months, and progress', async () => {
     const user = userEvent.setup()
-    renderPage('/savings-goals')
+    renderPage('/practice/savings-goals')
     await completeForm(user, { name: 'Laptop', target: '1000', current: '250', monthly: '200' })
     expect(screen.getByRole('heading', { name: /laptop/i })).toBeInTheDocument()
     expect(screen.getByText(/SAR 750.00 remaining/i)).toBeInTheDocument()
@@ -70,7 +70,7 @@ describe('savings goals calculator', () => {
     ['overfunded', '1000', '1200'],
   ])('handles a %s goal without negative remaining', async (_, target, current) => {
     const user = userEvent.setup()
-    renderPage('/savings-goals')
+    renderPage('/practice/savings-goals')
     await completeForm(user, { name: 'Trip', target, current, monthly: '100' })
     expect(screen.getByText(/goal reached/i)).toBeInTheDocument()
     expect(screen.getByText(/SAR 0.00 remaining/i)).toBeInTheDocument()
@@ -79,7 +79,7 @@ describe('savings goals calculator', () => {
 
   it('explains that timing cannot be calculated with zero contributions', async () => {
     const user = userEvent.setup()
-    renderPage('/savings-goals')
+    renderPage('/practice/savings-goals')
     await completeForm(user, { name: 'Bike', target: '500', current: '100', monthly: '0' })
     expect(screen.getByText(/time cannot be calculated/i)).toBeInTheDocument()
     expect(screen.queryByText(/Infinity|NaN/)).not.toBeInTheDocument()
@@ -87,7 +87,7 @@ describe('savings goals calculator', () => {
 
   it('rejects missing and negative savings values', async () => {
     const user = userEvent.setup()
-    renderPage('/savings-goals')
+    renderPage('/practice/savings-goals')
     await user.type(screen.getByLabelText(/goal name/i), 'Laptop')
     await user.type(screen.getByLabelText(/^target amount/i), '-1')
     await user.click(screen.getByRole('button', { name: /calculate goal/i }))
@@ -97,7 +97,7 @@ describe('savings goals calculator', () => {
 
   it.each(['many', 'Infinity'])('rejects non-finite savings value %j', async (target) => {
     const user = userEvent.setup()
-    renderPage('/savings-goals')
+    renderPage('/practice/savings-goals')
     await completeForm(user, { name: 'Laptop', target, current: '0', monthly: '100' })
     expect(screen.getByRole('alert')).toBeInTheDocument()
     expect(screen.queryByText(/Infinity|NaN/)).not.toBeInTheDocument()
@@ -105,7 +105,7 @@ describe('savings goals calculator', () => {
 
   it('clears a savings estimate when any goal input changes', async () => {
     const user = userEvent.setup()
-    renderPage('/savings-goals')
+    renderPage('/practice/savings-goals')
     await completeForm(user, { name: 'Laptop', target: '1000', current: '250', monthly: '200' })
     expect(screen.getByText(/SAR 750.00 remaining/i)).toBeInTheDocument()
     await user.type(screen.getByLabelText(/current savings/i), '0')

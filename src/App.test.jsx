@@ -1,10 +1,11 @@
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { StrictMode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App.jsx'
 import LocalClock from './components/LocalClock.jsx'
+import { navigationItems } from './data/navigation.js'
 
 function LocationProbe() {
   return <output data-testid="location">{useLocation().pathname}</output>
@@ -156,16 +157,24 @@ describe('BudgetBasics app shell', () => {
     expect(screen.getByRole('heading', { level: 1, name: heading })).toBeInTheDocument()
   })
 
-  it('lists every application destination on the sitemap', () => {
+  it('mirrors the shared navigation groups on the sitemap in exact order', () => {
+    renderApp('/sitemap')
+    const sections = screen.getAllByRole('region').slice(0, navigationItems.length)
+
+    expect(sections.map((section) => within(section).getByRole('heading').textContent)).toEqual(navigationItems.map(({ label }) => label))
+    expect(sections.map((section) => Array.from(section.querySelectorAll('a'), (link) => [link.textContent, link.getAttribute('href')]))).toEqual(
+      navigationItems.map((item) => (item.children ?? [item]).map(({ label, path }) => [label, path])),
+    )
+  })
+
+  it('adds canonical sitemap and privacy support destinations after navigation', () => {
     renderApp('/sitemap')
     const sitemap = screen.getByRole('main')
-    const paths = Array.from(sitemap.querySelectorAll('a'), (link) => link.getAttribute('href'))
-    expect(paths).toEqual(expect.arrayContaining([
-      '/', '/learn/budgeting-basics', '/learn/needs-vs-wants', '/learn/savings-goals', '/learn/expense-planner',
-      '/learn/money-mistakes', '/practice/savings-goals', '/practice/expense-planner', '/practice/money-mistakes',
-      '/resources/infographics', '/resources/search', '/budget-calculator', '/chatbot', '/about', '/feedback',
-      '/contact', '/sitemap', '/privacy',
-    ]))
+    const links = Array.from(sitemap.querySelectorAll('a'), (link) => [link.textContent, link.getAttribute('href')])
+    const navigationLinkCount = navigationItems.reduce((total, item) => total + (item.children?.length ?? 1), 0)
+
+    expect(links.slice(navigationLinkCount)).toEqual([['Sitemap', '/sitemap'], ['Privacy notice', '/privacy']])
+    expect(links.every(([, path]) => !['/budgeting-basics', '/needs-vs-wants', '/savings-goals', '/expense-planner', '/money-mistakes', '/infographics', '/search', '/50-30-20'].includes(path))).toBe(true)
   })
 
   it.each([

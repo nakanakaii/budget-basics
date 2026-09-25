@@ -19,14 +19,14 @@ TC-A07 | Learning activity | Incorrect answer, explanation, retry, classificatio
 TC-A08 | Keyboard disclosure | Activate a money-mistake accordion by keyboard | Expect explanation opens | learning-page tests
 TC-A09 | Search | Keywords, topic, sorting, empty query, reset | Expect normalized routed results and deterministic reset | search and support tests
 TC-A10 | Chatbot | Supported and unrelated questions; rate a response | Expect prepared answer or safe fallback plus local feedback acknowledgment | chatbot and support tests
-TC-A11 | Navigation | Mobile menu, route change, active state, complete sitemap, back-to-top | Expect every destination listed, accessible state, and reduced-motion handling | app-shell tests
+TC-A11 | Navigation | Mobile menu, route change, active state, grouped sitemap parity, canonical links, back-to-top | Expect shared navigation headings and children in exact order, support destinations, accessible state, and reduced-motion handling | app-shell tests
 TC-A12 | Local forms | Valid and invalid feedback/contact values, including edit after success | Expect validation, no stale success state, and local completion without network claim | validation and support tests
 
 Submission verification results
 -------------------------------
-AUTOMATED_TEST_RESULT: PASS - 10 files and 89 tests passed with Vitest 5.0.1
+AUTOMATED_TEST_RESULT: PASS - 10 files and 112 tests passed with Vitest 5.0.1
 LINT_RESULT: PASS - ESLint completed with no findings
-BUILD_RESULT: PASS - Vite 8.3.0 built 2028 modules successfully
+BUILD_RESULT: PASS - Vite 8.3.0 built 2031 modules successfully
 BROWSER_SMOKE_RESULT: NOT RUN - no browser automation dependency is included in this repository
 LIGHTHOUSE_RESULT: NOT PERFORMED
 MP4_RESULT: NOT RECORDED - MANUAL REMAINING DELIVERABLE

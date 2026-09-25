@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-BudgetBasics is a responsive, frontend-only learning website that helps students understand everyday personal finance and practise what they learn. Educational content ships with the app, calculators run locally, and planner entries remain temporary browser state. The application covers twelve primary destinations plus search, sitemap, privacy, and fallback routes.
+BudgetBasics is a responsive, frontend-only learning website that helps students understand everyday personal finance and practise what they learn. Educational content ships with the app, calculators run locally, and planner entries remain temporary browser state. The application exposes sixteen canonical navigation destinations plus sitemap, privacy, compatibility redirects, and a fallback route.
 
 ## Problem definition
 
@@ -24,7 +24,7 @@ Accessibility features represented in the implementation and tests include seman
 
 ## Architecture
 
-BudgetBasics is a Vite single-page application built with React. React Router maps URLs to page components. JavaScript and JSON modules provide navigation, learning content, infographics, and chatbot responses. Zod validates form input. Pure finance functions calculate results. Zustand manages the temporary expense planner. Vitest, Testing Library, and jsdom exercise logic and rendered behaviour.
+BudgetBasics is a Vite single-page application built with React. React Router maps URLs to page components. A shared `navigationItems` structure supplies the application shell and grouped sitemap in the same order, while JavaScript and JSON modules provide learning content, infographics, and chatbot responses. Zod validates form input. Pure finance functions calculate results. Zustand manages the temporary expense planner. Vitest, Testing Library, and jsdom exercise logic and rendered behaviour.
 
 ```mermaid
 flowchart LR
@@ -60,18 +60,24 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    H[Home] --> B[Budgeting Basics]
-    H --> NW[Needs vs Wants]
-    H --> R[50 30 20 Rule]
-    H --> SG[Savings Goals]
-    H --> EP[Expense Planner]
-    H --> MM[Money Mistakes]
-    H --> I[Infographics]
+    H[Home] --> L[Learn Budgeting]
+    L --> B[Budgeting Basics]
+    L --> NW[Needs vs Wants]
+    L --> SGL[Savings Goals Guide]
+    L --> EPL[Expense Planner Guide]
+    L --> MMG[Money Mistakes Guide]
+    H --> PP[Practice Planning]
+    PP --> SG[Savings Goals]
+    PP --> EP[Expense Planner]
+    PP --> MMP[Money Mistakes]
+    H --> ER[Explore Resources]
+    ER --> I[Infographics and Gallery]
+    ER --> SE[Search Sort and Filters]
+    H --> R[Budget Calculator]
     H --> CB[Chatbot]
     H --> A[About]
     H --> F[Feedback]
     H --> C[Contact]
-    H --> SE[Search]
     H --> SM[Sitemap]
     H --> P[Privacy]
 ```
@@ -79,16 +85,22 @@ flowchart TD
 | Route | Purpose |
 | --- | --- |
 | `/` | Overview and entry points |
-| `/budgeting-basics` | Six core concepts and knowledge check |
-| `/needs-vs-wants` | Classification activity with reasoning |
-| `/50-30-20` | Suggested needs, wants, and savings allocation |
-| `/savings-goals` | Remaining amount, progress, and time estimate |
-| `/expense-planner` | Temporary income and expense planning |
-| `/money-mistakes` | Scenarios, consequences, actions, and prevention |
-| `/infographics` | Searchable visual learning cards |
+| `/learn/budgeting-basics` | Six core concepts and knowledge check |
+| `/learn/needs-vs-wants` | Needs-versus-wants learning and classification |
+| `/learn/savings-goals` | Savings goal learning guide |
+| `/learn/expense-planner` | Expense planning learning guide |
+| `/learn/money-mistakes` | Scenarios, consequences, actions, and prevention |
+| `/practice/savings-goals` | Remaining amount, progress, and time estimate |
+| `/practice/expense-planner` | Temporary income and expense planning |
+| `/practice/money-mistakes` | Interactive corrective-action practice |
+| `/resources/infographics` | Searchable visual learning cards |
+| `/resources/search` | Resource search, sorting, and filters |
+| `/budget-calculator` | Suggested needs, wants, and savings allocation |
 | `/chatbot` | Prepared answers selected from local keywords |
 | `/about`, `/feedback`, `/contact` | Project and local-form support pages |
-| `/search`, `/sitemap`, `/privacy` | Discovery, route index, and privacy explanation |
+| `/sitemap`, `/privacy` | Route index and privacy explanation |
+
+Legacy top-level paths remain redirect-only compatibility aliases and are not used by internal links.
 
 ## Main workflows
 

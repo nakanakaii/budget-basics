@@ -72,7 +72,7 @@ describe('interactive learning pages', () => {
 
   it('explains a quiz answer and allows a retry', async () => {
     const user = userEvent.setup()
-    renderPage('/budgeting-basics')
+    renderPage('/learn/budgeting-basics')
     expect(screen.getByRole('table', { name: /sample monthly student budget/i })).toBeInTheDocument()
     await user.selectOptions(screen.getByLabelText(/which expense is fixed/i), 'Transport pass')
     await user.click(screen.getByRole('button', { name: /check answer/i }))
@@ -84,7 +84,7 @@ describe('interactive learning pages', () => {
   })
 
   it('renders the six canonical budget concepts with student examples', () => {
-    renderPage('/budgeting-basics')
+    renderPage('/learn/budgeting-basics')
     const concepts = screen.getByRole('region', { name: /six building blocks/i })
     for (const name of ['Income', 'Fixed expenses', 'Variable expenses', 'Needs', 'Wants', 'Savings']) {
       expect(within(concepts).getByRole('heading', { name })).toBeInTheDocument()
@@ -96,7 +96,7 @@ describe('interactive learning pages', () => {
 
   it('classifies needs and wants with reasoning', async () => {
     const user = userEvent.setup()
-    renderPage('/needs-vs-wants')
+    renderPage('/learn/needs-vs-wants')
     await user.click(screen.getByRole('button', { name: /basic groceries.*need/i }))
     expect(screen.getByRole('status')).toHaveTextContent(/correct.*essential food/i)
     await user.click(screen.getByRole('button', { name: /streaming subscription.*need/i }))
@@ -106,7 +106,7 @@ describe('interactive learning pages', () => {
 
   it('opens a keyboard-accessible money mistake accordion', async () => {
     const user = userEvent.setup()
-    renderPage('/money-mistakes')
+    renderPage('/learn/money-mistakes')
     const trigger = screen.getByRole('button', { name: /impulse buying/i })
     expect(trigger).toHaveAttribute('aria-expanded', 'false')
     await user.click(trigger)
@@ -117,7 +117,7 @@ describe('interactive learning pages', () => {
 
   it('explains every money mistake', async () => {
     const user = userEvent.setup()
-    renderPage('/money-mistakes')
+    renderPage('/learn/money-mistakes')
     const accordion = screen.getByRole('region', { name: /common money mistakes/i })
     for (const trigger of within(accordion).getAllByRole('button')) {
       await user.click(trigger)
@@ -127,7 +127,7 @@ describe('interactive learning pages', () => {
 
   it('filters searchable infographic cards and resets a real empty state', async () => {
     const user = userEvent.setup()
-    renderPage('/infographics')
+    renderPage('/resources/infographics')
     expect(screen.getAllByRole('img')).toHaveLength(4)
     expect(screen.getByText(/50% needs, 30% wants, and 20% savings/i)).toBeInTheDocument()
     const all = screen.getByRole('button', { name: /all topics/i })

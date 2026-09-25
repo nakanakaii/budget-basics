@@ -12,7 +12,8 @@ Use sample values from `test-data.json`; do not enter real financial or contact 
 ## Application shell and learning
 
 - [ ] Show the home page purpose and main calls to action.
-- [ ] Open the responsive navigation by keyboard; follow a link and show its active state.
+- [ ] Show the canonical Learn Budgeting, Practice Planning, and Explore Resources groups in order; open the responsive navigation by keyboard, follow a child link, and show its active state.
+- [ ] Confirm the grouped Sitemap mirrors those navigation headings and child links, then ends with Sitemap and Privacy notice.
 - [ ] Show Search, Sitemap, Privacy, and back-to-top behaviour.
 - [ ] Explain the six concepts and one student example.
 - [ ] Answer a knowledge-check question, show feedback, and retry.

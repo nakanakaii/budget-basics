@@ -11,7 +11,7 @@ afterEach(() => { cleanup(); vi.useRealTimers() })
 describe('discovery and support pages', () => {
   it('filters, sorts, clears, and resets resource search', async () => {
     const user = userEvent.setup()
-    renderPage('/search')
+    renderPage('/resources/search')
 
     expect(screen.getAllByRole('article').map((item) => item.textContent)).toEqual([
       expect.stringContaining('Check needs and wants'),

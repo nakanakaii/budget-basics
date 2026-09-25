@@ -8,7 +8,7 @@ Target length: 6 to 8 minutes. Recording and attaching the MP4 is a manual remai
 
 ## 0:35 to 1:10 Navigation
 
-Identify the twelve primary destinations. Follow one link and point out its active state. Switch to a narrow viewport, open the mobile menu with the keyboard, choose a destination, and show that it closes. Mention Search, Sitemap, Privacy, and the reduced-motion-aware back-to-top control.
+Show the canonical navigation order: Home; Learn Budgeting; Practice Planning; Explore Resources; Budget Calculator; AI Assistant; About; Feedback; and Contact. Open each grouped menu briefly, follow one child link, and point out its active parent state. Switch to a narrow viewport, open the mobile menu with the keyboard, choose a destination, and show that it closes. Show that the grouped Sitemap mirrors the shared navigation data and ends with Sitemap and Privacy notice, then mention the reduced-motion-aware back-to-top control.
 
 ## 1:10 to 2:05 Learning modules
 
