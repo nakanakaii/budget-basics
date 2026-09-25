@@ -1,0 +1,33 @@
+{
+  "currency": "SAR",
+  "budgetCalculator": [
+    { "income": 1000, "expected": { "needs": 500, "wants": 300, "savings": 200 } },
+    { "income": 0, "expected": { "needs": 0, "wants": 0, "savings": 0 } },
+    { "income": -1, "expectedError": "Income must be zero or more" }
+  ],
+  "savingsGoals": [
+    { "target": 1200, "current": 200, "monthly": 300, "expected": { "remaining": 1000, "months": 4, "progress": 17, "complete": false } },
+    { "target": 500, "current": 600, "monthly": 50, "expected": { "remaining": 0, "months": 0, "progress": 100, "complete": true } },
+    { "target": 1000, "current": 100, "monthly": 0, "expected": { "remaining": 900, "months": null, "progress": 10, "complete": false } }
+  ],
+  "expensePlanner": {
+    "entries": [
+      { "type": "income", "category": "Weekend work", "amount": 1200 },
+      { "type": "expense", "category": "Transport", "amount": 200 },
+      { "type": "expense", "category": "Groceries", "amount": 350 }
+    ],
+    "expected": { "totalIncome": 1200, "totalExpenses": 550, "balance": 650 }
+  },
+  "search": [
+    { "query": "saving", "expectedResource": "Turn savings into a goal" },
+    { "query": "transport", "expectedResource": null }
+  ],
+  "chatbot": [
+    { "question": "How much should I save?", "expectedTopic": "saving" },
+    { "question": "Tell me about dragons", "expectedTopic": "fallback" }
+  ],
+  "forms": {
+    "validFeedback": { "name": "Student", "email": "student@example.com", "rating": 5, "comments": "Clear and useful." },
+    "invalidEmail": "student-at-example.com"
+  }
+}

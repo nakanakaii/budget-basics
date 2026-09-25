@@ -1,0 +1,45 @@
+BudgetBasics test cases and submission results
+==============================================
+
+Test environment
+----------------
+Runtime: Bun package scripts; Vitest uses jsdom for component tests.
+Commands: bun run test; bun run lint; bun run build
+Use bun run test. The shorter bun test starts Bun's different built-in runner and does not apply this project's Vitest jsdom configuration.
+
+Automated cases
+---------------
+TC-A01 | 50/30/20 calculation | Income 1000 | Expect needs 500, wants 300, savings 200 | finance and calculator tests
+TC-A02 | Unsafe money values | Negative, NaN, Infinity, missing, or non-numeric | Expect calculation blocked and clear error | finance, validation, calculator, planner tests
+TC-A03 | Savings timeline | Target 1200, current 200, monthly 300 | Expect remaining 1000 and four months | finance and calculator tests
+TC-A04 | Complete goal | Current at or above target | Expect zero remaining/months and progress capped at 100% | finance and calculator tests
+TC-A05 | Planner lifecycle | Add, edit, delete, reset | Expect stable IDs, updated totals, cleared reset state | store and planner tests
+TC-A06 | Overspending | Expenses exceed income | Expect negative balance and visible warning | planner tests
+TC-A07 | Learning activity | Incorrect answer, explanation, retry, classification | Expect clear feedback and retry | learning-page tests
+TC-A08 | Keyboard disclosure | Activate a money-mistake accordion by keyboard | Expect explanation opens | learning-page tests
+TC-A09 | Search | Keywords, topic, sorting, empty query, reset | Expect normalized routed results and deterministic reset | search and support tests
+TC-A10 | Chatbot | Supported and unrelated questions | Expect prepared answer or safe fallback | chatbot and support tests
+TC-A11 | Navigation | Mobile menu, route change, active state, back-to-top | Expect accessible state and reduced-motion handling | app-shell tests
+TC-A12 | Local forms | Valid and invalid feedback/contact values | Expect validation and local completion without network claim | validation and support tests
+
+Submission verification results
+-------------------------------
+AUTOMATED_TEST_RESULT: PASS - 10 files and 84 tests passed with Vitest 5.0.1
+LINT_RESULT: PASS - ESLint completed with no findings
+BUILD_RESULT: PASS - Vite 8.3.0 built 2028 modules successfully
+BROWSER_SMOKE_RESULT: NOT RUN - no browser automation dependency is included in this repository
+LIGHTHOUSE_RESULT: NOT PERFORMED
+MP4_RESULT: NOT RECORDED - MANUAL REMAINING DELIVERABLE
+
+Manual acceptance cases
+-----------------------
+TC-M01 | Open every primary destination; confirm title and content match the link.
+TC-M02 | At a narrow viewport, confirm mobile navigation opens by keyboard and closes after selection.
+TC-M03 | Enter 1000 in the 50/30/20 calculator; confirm 500 / 300 / 200.
+TC-M04 | Enter the savings goal from test-data.json; confirm timeline and progress.
+TC-M05 | Add the three planner entries; confirm totals 1200 / 550 / 650; edit and delete an item.
+TC-M06 | Trigger a negative or invalid money input; confirm a clear error and no misleading result.
+TC-M07 | Complete the quiz and needs-versus-wants activity using keyboard controls.
+TC-M08 | Search for saving; reset; ask the chatbot a supported and unsupported question.
+TC-M09 | Submit sample feedback/contact data; confirm the page identifies local-only handling.
+TC-M10 | Refresh the planner; confirm temporary data is not presented as persisted.
