@@ -12,7 +12,7 @@ bun run build
 bun run preview
 ```
 
-Publish only `dist/`. Configure the host so a request such as `/savings-goals` returns `/index.html` when no physical file matches. Static assets must continue to be served normally.
+Publish only `dist/`. Configure the host so a request such as `/practice/savings-goals` returns `/index.html` when no physical file matches. Static assets must continue to be served normally.
 
 ## Common hosts
 
@@ -24,7 +24,7 @@ Publish only `dist/`. Configure the host so a request such as `/savings-goals` r
 ## Post-deployment checks
 
 1. Open the home page over HTTPS.
-2. Open `/50-30-20`, `/savings-goals`, and `/expense-planner` directly.
+2. Open `/learn/budgeting-basics`, `/practice/savings-goals`, `/practice/expense-planner`, `/resources/infographics`, and `/budget-calculator` directly.
 3. Refresh each route and confirm no 404.
 4. Run calculator and planner cases from `test-cases.txt`.
 5. Test keyboard navigation and a narrow viewport.
