@@ -1,12 +1,12 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import App from '../App.jsx'
 
 const renderPage = (path) => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
 
-afterEach(cleanup)
+afterEach(() => { cleanup(); vi.useRealTimers() })
 
 describe('discovery and support pages', () => {
   it('filters, sorts, clears, and resets resource search', async () => {
@@ -46,6 +46,26 @@ describe('discovery and support pages', () => {
     await user.type(screen.getByRole('textbox', { name: /ask a money question/i }), 'What color is the moon?')
     await user.click(screen.getByRole('button', { name: 'Ask' }))
     expect(await screen.findByText(/I can help with budgeting, saving, needs and wants/i)).toBeInTheDocument()
+  })
+
+  it('serializes rapid chatbot submissions and re-enables its controls', () => {
+    vi.useFakeTimers()
+    renderPage('/chatbot')
+    const input = screen.getByRole('textbox', { name: /ask a money question/i })
+    const form = input.closest('form')
+    fireEvent.change(input, { target: { value: 'What is a need?' } })
+    fireEvent.submit(form)
+    fireEvent.change(input, { target: { value: 'How much should I save?' } })
+    fireEvent.submit(form)
+
+    expect(screen.getAllByText(/You:/)).toHaveLength(1)
+    expect(input).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Ask' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'What is a need?' })).toBeDisabled()
+    act(() => vi.advanceTimersByTime(100))
+    expect(screen.getByText(/supports basic living, study, or safety/i)).toBeInTheDocument()
+    expect(input).toBeEnabled()
+    expect(screen.getByRole('button', { name: 'Ask' })).toBeEnabled()
   })
 
   it.each([

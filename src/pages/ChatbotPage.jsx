@@ -14,6 +14,7 @@ export default function ChatbotPage() {
   const timer = useRef()
   useEffect(() => () => clearTimeout(timer.current), [])
   const ask = (text) => {
+    if (loading) return
     const clean = text.trim()
     if (!clean) return
     const response = studentTips[clean] ?? replyTo(clean).answer
@@ -30,9 +31,9 @@ export default function ChatbotPage() {
   return <>
     <PageHero eyebrow="Local learning helper" title="Budget chatbot"><p>This chatbot is rule-based and runs locally. It supports budgeting, saving, needs and wants, and basic debt topics.</p></PageHero>
     <section className="chatbot-panel">
-      <div className="suggestions" aria-label="Suggested questions">{suggestions.map((item) => <button className="secondary-button" type="button" key={item} onClick={() => ask(item)}>{item}</button>)}</div>
+      <div className="suggestions" aria-label="Suggested questions">{suggestions.map((item) => <button className="secondary-button" type="button" key={item} disabled={loading} onClick={() => ask(item)}>{item}</button>)}</div>
       <div className="conversation" aria-live="polite" aria-label="Conversation">{messages.length ? messages.map((message, index) => <p className={message.role} key={`${message.role}-${index}`}><strong>{message.role === 'user' ? 'You' : 'BudgetBasics'}:</strong> {message.text}</p>) : <p>Choose a suggestion or ask a supported money question.</p>}{loading && <p role="status">Thinking…</p>}</div>
-      <form className="chat-form" onSubmit={(event) => { event.preventDefault(); ask(question) }}><label className="field">Ask a money question<input value={question} onChange={(event) => setQuestion(event.target.value)} /></label><button className="primary-button" type="submit">Ask</button></form>
+      <form className="chat-form" onSubmit={(event) => { event.preventDefault(); ask(question) }}><label className="field">Ask a money question<input disabled={loading} value={question} onChange={(event) => setQuestion(event.target.value)} /></label><button className="primary-button" type="submit" disabled={loading}>Ask</button></form>
       <p className="disclaimer">This chatbot is for educational purposes only and does not provide professional financial advice.</p>
     </section>
   </>
