@@ -71,6 +71,17 @@ describe('BudgetBasics app shell', () => {
     expect(screen.getByRole('heading', { level: 1, name: heading })).toBeInTheDocument()
   })
 
+  it('lists every application destination on the sitemap', () => {
+    renderApp('/sitemap')
+    const sitemap = screen.getByRole('main')
+    const paths = Array.from(sitemap.querySelectorAll('a'), (link) => link.getAttribute('href'))
+    expect(paths).toEqual(expect.arrayContaining([
+      '/', '/budgeting-basics', '/needs-vs-wants', '/50-30-20', '/savings-goals', '/expense-planner',
+      '/money-mistakes', '/infographics', '/chatbot', '/about', '/feedback', '/contact',
+      '/search', '/sitemap', '/privacy',
+    ]))
+  })
+
   it('renders an honest not-found page for unknown routes', () => {
     renderApp('/missing-page')
     expect(screen.getByRole('heading', { level: 1, name: /page not found/i })).toBeInTheDocument()

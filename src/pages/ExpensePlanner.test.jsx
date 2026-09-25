@@ -75,6 +75,24 @@ describe('expense planner', () => {
     expect(screen.getByText('Dinner')).toBeInTheDocument()
   })
 
+  it('cancels editing without changing the saved expense', async () => {
+    const user = userEvent.setup()
+    renderPage()
+    await addExpense(user)
+    await user.click(screen.getByRole('button', { name: /edit lunch/i }))
+    await user.clear(screen.getByLabelText(/^description/i))
+    await user.click(screen.getByRole('button', { name: /save expense/i }))
+    expect(screen.getByRole('alert')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /cancel/i }))
+
+    expect(screen.getByRole('heading', { name: /add an expense/i })).toBeInTheDocument()
+    expect(screen.getByLabelText(/^description/i)).toHaveValue('')
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    expect(screen.getByText('Lunch')).toBeInTheDocument()
+    expect(usePlannerStore.getState().entries).toMatchObject([{ description: 'Lunch', amount: 50 }])
+  })
+
   it.each(['', '-1', 'not-a-number', 'Infinity'])('rejects invalid sample income %j without showing a misleading summary', async (value) => {
     const user = userEvent.setup()
     renderPage()

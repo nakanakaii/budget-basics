@@ -9,9 +9,10 @@ export default function FeedbackPage() {
   const [values, setValues] = useState(initial)
   const [errors, setErrors] = useState({})
   const [sent, setSent] = useState(false)
-  const change = (event) => setValues({ ...values, [event.target.name]: event.target.value })
+  const change = (event) => { setSent(false); setValues({ ...values, [event.target.name]: event.target.value }) }
   const submit = (event) => {
     event.preventDefault()
+    setSent(false)
     const result = feedbackSchema.safeParse({ ...values, rating: Number(values.rating) })
     if (!result.success) return setErrors(Object.fromEntries(result.error.issues.map((issue) => [issue.path[0], issue.message])))
     setErrors({}); setSent(true); setValues(initial)

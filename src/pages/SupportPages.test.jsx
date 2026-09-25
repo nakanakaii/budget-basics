@@ -97,6 +97,26 @@ describe('discovery and support pages', () => {
     await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0))
   })
 
+  it.each([
+    ['/feedback', 'Comments', /send feedback/i],
+    ['/contact', 'Message', /send message/i],
+  ])('clears stale success when %s is edited and resubmitted invalid', async (path, finalField, submitName) => {
+    const user = userEvent.setup()
+    renderPage(path)
+    await user.type(screen.getByLabelText('Name'), 'Student')
+    await user.type(screen.getByLabelText('Email'), 'student@example.com')
+    if (path === '/feedback') await user.selectOptions(screen.getByLabelText('Rating'), '5')
+    await user.type(screen.getByLabelText(finalField), 'Helpful message')
+    await user.click(screen.getByRole('button', { name: submitName }))
+    expect(await screen.findByText(/^(thank you|thanks).*not transmitted or saved/i)).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('Name'), 'Changed')
+    expect(screen.queryByText(/^(thank you|thanks).*not transmitted or saved/i)).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: submitName }))
+    expect(screen.getAllByRole('alert').length).toBeGreaterThan(0)
+    expect(screen.queryByText(/^(thank you|thanks).*not transmitted or saved/i)).not.toBeInTheDocument()
+  })
+
   it('uses only editable creator and contact placeholders', () => {
     renderPage('/about')
     expect(screen.getByText(/editable creator placeholder/i)).toBeInTheDocument()
