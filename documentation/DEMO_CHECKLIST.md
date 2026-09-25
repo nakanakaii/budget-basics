@@ -26,8 +26,10 @@ Use sample values from `test-data.json`; do not enter real financial or contact 
 - [ ] Change income and show that a stale result clears.
 - [ ] Estimate a 1200 target from 200 current savings at 300 monthly.
 - [ ] Demonstrate zero contribution and complete-goal cases.
-- [ ] Add 1200 income, 200 transport, and 350 groceries.
-- [ ] Confirm totals of 1200 income, 550 expenses, and 650 balance.
+- [ ] Enter 1200 in the separate Sample monthly income field.
+- [ ] Add 2026-09-01, Transport, Monthly bus pass, 200 as the first expense.
+- [ ] Add 2026-09-02, Food, Basic groceries, 350 as the second expense.
+- [ ] Confirm total expenses of 550 and remaining amount of 650.
 - [ ] Edit, delete, overspend, and reset; show validation for a bad value.
 
 ## Discovery, support, and closing

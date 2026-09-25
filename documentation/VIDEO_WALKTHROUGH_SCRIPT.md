@@ -28,7 +28,7 @@ Enter target 1200, current savings 200, and monthly contribution 300. Show 1000 
 
 ## 3:55 to 5:00 Expense planner
 
-Add income 1200 for Weekend work, expense 200 for Transport, and expense 350 for Groceries. Show totals 1200, 550, and 650. Edit an entry, delete one, demonstrate overspending, and reset. State that planner data is intentionally not persisted.
+Enter 1200 in the separate Sample monthly income field. Add an expense dated 2026-09-01 in Transport with description “Monthly bus pass” and amount 200. Add a second expense dated 2026-09-02 in Food with description “Basic groceries” and amount 350. Show total expenses 550 and remaining 650. Edit an expense, delete one, demonstrate overspending, and reset. State that planner data is intentionally not persisted.
 
 ## 5:00 to 5:40 Search and chatbot
 

@@ -13,7 +13,7 @@ TC-A01 | 50/30/20 calculation | Income 1000 | Expect needs 500, wants 300, savin
 TC-A02 | Unsafe money values | Negative, NaN, Infinity, missing, or non-numeric | Expect calculation blocked and clear error | finance, validation, calculator, planner tests
 TC-A03 | Savings timeline | Target 1200, current 200, monthly 300 | Expect remaining 1000 and four months | finance and calculator tests
 TC-A04 | Complete goal | Current at or above target | Expect zero remaining/months and progress capped at 100% | finance and calculator tests
-TC-A05 | Planner lifecycle | Add, edit, delete, reset | Expect stable IDs, updated totals, cleared reset state | store and planner tests
+TC-A05 | Planner lifecycle | Enter sample monthly income; add dated expense records; edit, delete, reset | Expect stable expense IDs, updated total expenses and remaining amount, cleared reset state | store and planner tests
 TC-A06 | Overspending | Expenses exceed income | Expect negative balance and visible warning | planner tests
 TC-A07 | Learning activity | Incorrect answer, explanation, retry, classification | Expect clear feedback and retry | learning-page tests
 TC-A08 | Keyboard disclosure | Activate a money-mistake accordion by keyboard | Expect explanation opens | learning-page tests
@@ -37,7 +37,7 @@ TC-M01 | Open every primary destination; confirm title and content match the lin
 TC-M02 | At a narrow viewport, confirm mobile navigation opens by keyboard and closes after selection.
 TC-M03 | Enter 1000 in the 50/30/20 calculator; confirm 500 / 300 / 200.
 TC-M04 | Enter the savings goal from test-data.json; confirm timeline and progress.
-TC-M05 | Add the three planner entries; confirm totals 1200 / 550 / 650; edit and delete an item.
+TC-M05 | Enter sample monthly income 1200. Add two expenses: 2026-09-01, Transport, Monthly bus pass, 200; and 2026-09-02, Food, Basic groceries, 350. Confirm total expenses 550 and remaining 650; edit and delete an expense.
 TC-M06 | Trigger a negative or invalid money input; confirm a clear error and no misleading result.
 TC-M07 | Complete the quiz and needs-versus-wants activity using keyboard controls.
 TC-M08 | Search for saving; reset; ask the chatbot a supported and unsupported question.

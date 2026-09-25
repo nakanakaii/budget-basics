@@ -105,10 +105,10 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[Enter income or expense] --> B{Fields valid}
+    A[Enter sample monthly income or dated expense] --> B{Fields valid}
     B -- No --> C[Explain correction]
     B -- Yes --> D[Add entry with stable local ID]
-    D --> E[Recalculate income expenses and balance]
+    D --> E[Recalculate total expenses and remaining amount]
     E --> F{Edit delete or reset}
     F -- Edit --> G[Update and preserve ID]
     F -- Delete --> H[Remove entry]

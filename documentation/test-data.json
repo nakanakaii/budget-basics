@@ -11,12 +11,12 @@
     { "target": 1000, "current": 100, "monthly": 0, "expected": { "remaining": 900, "months": null, "progress": 10, "complete": false } }
   ],
   "expensePlanner": {
-    "entries": [
-      { "type": "income", "category": "Weekend work", "amount": 1200 },
-      { "type": "expense", "category": "Transport", "amount": 200 },
-      { "type": "expense", "category": "Groceries", "amount": 350 }
+    "sampleMonthlyIncome": 1200,
+    "expenses": [
+      { "date": "2026-09-01", "category": "Transport", "description": "Monthly bus pass", "amount": 200 },
+      { "date": "2026-09-02", "category": "Food", "description": "Basic groceries", "amount": 350 }
     ],
-    "expected": { "totalIncome": 1200, "totalExpenses": 550, "balance": 650 }
+    "expected": { "totalExpenses": 550, "remaining": 650 }
   },
   "search": [
     { "query": "saving", "expectedResource": "Turn savings into a goal" },
