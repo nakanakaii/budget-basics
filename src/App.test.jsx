@@ -54,13 +54,86 @@ describe('BudgetBasics app shell', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('lists all twelve primary destinations and marks the active link', () => {
+  it('renders standalone links and the three grouped navigation triggers', () => {
+    renderApp()
+    const navigation = screen.getByRole('navigation', { name: /primary/i })
+
+    for (const label of ['Home', 'Budget Calculator', 'AI Assistant', 'About', 'Feedback', 'Contact']) {
+      expect(Array.from(navigation.querySelectorAll('a')).find((link) => link.textContent === label)).toBeInTheDocument()
+    }
+    for (const label of ['Learn Budgeting', 'Practice Planning', 'Explore Resources']) {
+      const trigger = screen.getByRole('button', { name: label })
+      expect(trigger).toHaveAttribute('aria-expanded', 'false')
+      expect(trigger).toHaveAttribute('aria-controls')
+    }
+  })
+
+  it('lists the required children in each navigation group', async () => {
+    const user = userEvent.setup()
+    renderApp()
+
+    await user.click(screen.getByRole('button', { name: 'Learn Budgeting' }))
+    const learn = document.getElementById(screen.getByRole('button', { name: 'Learn Budgeting' }).getAttribute('aria-controls'))
+    expect(Array.from(learn.querySelectorAll('a'), (link) => [link.textContent, link.getAttribute('href')])).toEqual([
+      ['Budgeting Basics', '/budgeting-basics'], ['Needs vs. Wants', '/needs-vs-wants'],
+      ['Savings Goals', '/savings-goals'], ['Expense Planner', '/expense-planner'], ['Money Mistakes', '/money-mistakes'],
+    ])
+
+    await user.click(screen.getByRole('button', { name: 'Practice Planning' }))
+    const practice = document.getElementById(screen.getByRole('button', { name: 'Practice Planning' }).getAttribute('aria-controls'))
+    expect(Array.from(practice.querySelectorAll('a'), (link) => link.textContent)).toEqual(['Savings Goals', 'Expense Planner', 'Money Mistakes'])
+
+    await user.click(screen.getByRole('button', { name: 'Explore Resources' }))
+    const explore = document.getElementById(screen.getByRole('button', { name: 'Explore Resources' }).getAttribute('aria-controls'))
+    expect(Array.from(explore.querySelectorAll('a'), (link) => [link.textContent, link.getAttribute('href')])).toEqual([
+      ['Infographics & Gallery', '/infographics'], ['Search, Sort & Filters', '/search'],
+    ])
+  })
+
+  it('keeps only one navigation group open and closes it with Escape', async () => {
+    const user = userEvent.setup()
+    renderApp()
+    const learn = screen.getByRole('button', { name: 'Learn Budgeting' })
+    const practice = screen.getByRole('button', { name: 'Practice Planning' })
+
+    await user.click(learn)
+    expect(learn).toHaveAttribute('aria-expanded', 'true')
+    await user.click(practice)
+    expect(learn).toHaveAttribute('aria-expanded', 'false')
+    expect(practice).toHaveAttribute('aria-expanded', 'true')
+    await user.keyboard('{Escape}')
+    expect(practice).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('marks a group active when the current route is one of its children', () => {
     renderApp('/budgeting-basics')
 
     const navigation = screen.getByRole('navigation', { name: /primary/i })
-    expect(navigation.querySelectorAll('a')).toHaveLength(12)
     expect(navigation.querySelector('a[href="/budgeting-basics"]')).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByRole('button', { name: 'Learn Budgeting' })).toHaveAttribute('data-active', 'true')
     expect(screen.getByRole('heading', { name: /budgeting basics/i })).toBeInTheDocument()
+  })
+
+  it('closes an open group after a child route change and closes the mobile menu', async () => {
+    const user = userEvent.setup()
+    renderApp()
+    const menu = screen.getByRole('button', { name: /navigation menu/i })
+    const group = screen.getByRole('button', { name: 'Learn Budgeting' })
+    await user.click(menu)
+    await user.click(group)
+    await user.click(screen.getByRole('navigation', { name: /primary/i }).querySelector('a[href="/budgeting-basics"]'))
+
+    expect(group).toHaveAttribute('aria-expanded', 'false')
+    expect(menu).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('closes open navigation groups when clicking outside the header', async () => {
+    const user = userEvent.setup()
+    renderApp()
+    const group = screen.getByRole('button', { name: 'Explore Resources' })
+    await user.click(group)
+    await user.click(screen.getByRole('main'))
+    expect(group).toHaveAttribute('aria-expanded', 'false')
   })
 
   it.each([
