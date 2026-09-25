@@ -39,6 +39,6 @@ export const tips = [
 export const resources = [
   { id: 'student-budget', title: 'Plan a student budget', description: 'Build a monthly plan from part-time income, allowance, and regular study costs.', topic: 'budget', path: '/learn/budgeting-basics', keywords: ['budget', 'student', 'income', 'expenses'] },
   { id: 'spending-check', title: 'Check needs and wants', description: 'Practice deciding which purchases are essential and which can wait.', topic: 'needs-wants', path: '/learn/needs-vs-wants', keywords: ['needs', 'wants', 'spending', 'choices'] },
-  { id: 'goal-steps', title: 'Turn savings into a goal', description: 'Set a target, contribution amount, and realistic timeline for something important.', topic: 'saving', path: '/practice/savings-goals', keywords: ['saving', 'goal', 'target', 'monthly'] },
+  { id: 'goal-steps', title: 'Turn savings into a goal', description: 'Set a target, contribution amount, and realistic timeline for something important.', topic: 'saving', path: '/learn/savings-goals', keywords: ['saving', 'goal', 'target', 'monthly'] },
   { id: 'mistake-review', title: 'Learn from money mistakes', description: 'Explore everyday student scenarios and choose a practical corrective action.', topic: 'money-mistakes', path: '/learn/money-mistakes', keywords: ['mistakes', 'habits', 'students', 'action'] },
 ]

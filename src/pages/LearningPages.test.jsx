@@ -14,9 +14,46 @@ describe('interactive learning pages', () => {
     expect(Object.fromEntries(resources.map(({ id, path }) => [id, path]))).toMatchObject({
       'student-budget': '/learn/budgeting-basics',
       'spending-check': '/learn/needs-vs-wants',
-      'goal-steps': '/practice/savings-goals',
+      'goal-steps': '/learn/savings-goals',
       'mistake-review': '/learn/money-mistakes',
     })
+  })
+
+  it.each([
+    ['/learn/budgeting-basics', /why budgeting matters/i, /how to build a budget/i, /mona plans her month/i],
+    ['/learn/needs-vs-wants', /why the difference matters/i, /how to decide/i, /bus pass/i],
+    ['/learn/savings-goals', /why savings goals matter/i, /how to build your savings plan/i, /laptop goal example/i],
+    ['/learn/expense-planner', /why expense planning matters/i, /how to plan expenses/i, /student month example/i],
+    ['/learn/money-mistakes', /why prevention matters/i, /how to prevent money mistakes/i, /student example/i],
+  ])('teaches purpose, ordered application, and an example at %s', (path, why, steps, example) => {
+    renderPage(path)
+    expect(screen.getByRole('heading', { name: why })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: steps })).toBeInTheDocument()
+    expect(screen.getByRole('list', { name: /ordered steps/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: example })).toBeInTheDocument()
+  })
+
+  it('keeps the savings and expense learning pages as guides, not tools', () => {
+    const { unmount } = renderPage('/learn/savings-goals')
+    expect(screen.queryByRole('button', { name: /calculate goal/i })).not.toBeInTheDocument()
+    unmount()
+    renderPage('/learn/expense-planner')
+    expect(screen.queryByRole('button', { name: /add expense/i })).not.toBeInTheDocument()
+  })
+
+  it('lets students retry a wrong money-mistake choice and advance after a correct choice', async () => {
+    const user = userEvent.setup()
+    renderPage('/practice/money-mistakes')
+    expect(screen.getByText(/scenario 1 of 3/i)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /buy it now/i }))
+    await user.click(screen.getByRole('button', { name: /check answer/i }))
+    expect(screen.getByRole('status')).toHaveTextContent(/not quite/i)
+    await user.click(screen.getByRole('button', { name: /try again/i }))
+    await user.click(screen.getByRole('button', { name: /wait 24 hours/i }))
+    await user.click(screen.getByRole('button', { name: /check answer/i }))
+    expect(screen.getByRole('status')).toHaveTextContent(/correct/i)
+    await user.click(screen.getByRole('button', { name: /next scenario/i }))
+    expect(screen.getByText(/scenario 2 of 3/i)).toBeInTheDocument()
   })
 
   it('explains a quiz answer and allows a retry', async () => {

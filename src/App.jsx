@@ -16,6 +16,9 @@ import ChatbotPage from './pages/ChatbotPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import FeedbackPage from './pages/FeedbackPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
+import SavingsGoalsGuidePage from './pages/SavingsGoalsGuidePage.jsx'
+import ExpensePlannerGuidePage from './pages/ExpensePlannerGuidePage.jsx'
+import MoneyMistakesPracticePage from './pages/MoneyMistakesPracticePage.jsx'
 
 function NotFound() {
   return <PageHero eyebrow="404" title="Page not found"><p>The requested page does not exist. Use the navigation to continue learning.</p></PageHero>
@@ -28,12 +31,12 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="learn/budgeting-basics" element={<BudgetingBasicsPage />} />
         <Route path="learn/needs-vs-wants" element={<NeedsWantsPage />} />
-        <Route path="learn/savings-goals" element={<SavingsGoalsPage />} />
-        <Route path="learn/expense-planner" element={<ExpensePlannerPage />} />
+        <Route path="learn/savings-goals" element={<SavingsGoalsGuidePage />} />
+        <Route path="learn/expense-planner" element={<ExpensePlannerGuidePage />} />
         <Route path="learn/money-mistakes" element={<MoneyMistakesPage />} />
         <Route path="practice/savings-goals" element={<SavingsGoalsPage />} />
         <Route path="practice/expense-planner" element={<ExpensePlannerPage />} />
-        <Route path="practice/money-mistakes" element={<MoneyMistakesPage />} />
+        <Route path="practice/money-mistakes" element={<MoneyMistakesPracticePage />} />
         <Route path="resources/infographics" element={<InfographicsPage />} />
         <Route path="resources/search" element={<SearchPage />} />
         <Route path="budget-calculator" element={<BudgetCalculatorPage />} />
