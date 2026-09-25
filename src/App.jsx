@@ -12,6 +12,11 @@ import SitemapPage from './pages/SitemapPage.jsx'
 import BudgetCalculatorPage from './pages/BudgetCalculatorPage.jsx'
 import SavingsGoalsPage from './pages/SavingsGoalsPage.jsx'
 import ExpensePlannerPage from './pages/ExpensePlannerPage.jsx'
+import SearchPage from './pages/SearchPage.jsx'
+import ChatbotPage from './pages/ChatbotPage.jsx'
+import AboutPage from './pages/AboutPage.jsx'
+import FeedbackPage from './pages/FeedbackPage.jsx'
+import ContactPage from './pages/ContactPage.jsx'
 
 function Placeholder({ name }) {
   return <PageHero eyebrow="Learning module" title={`${name} module coming soon`}><p>This area is reserved for the upcoming {name.toLowerCase()} learning module.</p></PageHero>
@@ -29,8 +34,12 @@ function App() {
         <Route path="50-30-20" element={<BudgetCalculatorPage />} />
         <Route path="savings-goals" element={<SavingsGoalsPage />} />
         <Route path="expense-planner" element={<ExpensePlannerPage />} />
-        {primaryLinks.slice(1).filter(([, path]) => !['/budgeting-basics', '/needs-vs-wants', '/money-mistakes', '/infographics', '/50-30-20', '/savings-goals', '/expense-planner'].includes(path)).map(([name, path]) => <Route key={path} path={path} element={<Placeholder name={name} />} />)}
-        <Route path="search" element={<Placeholder name="Search" />} />
+        <Route path="chatbot" element={<ChatbotPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="feedback" element={<FeedbackPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        {primaryLinks.slice(1).filter(([, path]) => !['/budgeting-basics', '/needs-vs-wants', '/money-mistakes', '/infographics', '/50-30-20', '/savings-goals', '/expense-planner', '/chatbot', '/about', '/feedback', '/contact'].includes(path)).map(([name, path]) => <Route key={path} path={path} element={<Placeholder name={name} />} />)}
+        <Route path="search" element={<SearchPage />} />
         <Route path="sitemap" element={<SitemapPage />} />
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="*" element={<Placeholder name="Page not found" />} />

@@ -7,7 +7,7 @@ describe('validation schemas', () => {
     expect(savingsGoalSchema.parse({ target: 1000, current: 250, monthly: 200 })).toBeTruthy()
     expect(plannerEntrySchema.parse({ type: 'expense', category: 'Food', amount: 20 })).toBeTruthy()
     expect(sampleIncomeSchema.parse({ label: 'Part-time job', amount: 500 })).toBeTruthy()
-    expect(feedbackSchema.parse({ rating: 5, message: 'Very useful lesson.' })).toBeTruthy()
+    expect(feedbackSchema.parse({ name: 'Student', email: 'student@example.com', rating: 5, comments: 'Very useful lesson.' })).toBeTruthy()
     expect(contactSchema.parse({ name: 'Student', email: 'student@example.com', message: 'Please help with my budget.' })).toBeTruthy()
   })
 

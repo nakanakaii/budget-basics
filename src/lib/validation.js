@@ -28,8 +28,10 @@ export const sampleIncomeSchema = z.object({
 })
 
 export const feedbackSchema = z.object({
+  name: required('Name'),
+  email: z.email('Enter a valid email address'),
   rating: z.number().int().min(1, 'Rating must be between 1 and 5').max(5, 'Rating must be between 1 and 5'),
-  message: required('Feedback').max(1000, 'Feedback must be 1000 characters or fewer'),
+  comments: required('Comments').max(1000, 'Comments must be 1000 characters or fewer'),
 })
 
 export const contactSchema = z.object({

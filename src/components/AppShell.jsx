@@ -25,7 +25,7 @@ export default function AppShell() {
           <nav id="primary-navigation" className={open ? 'nav-open' : ''} aria-label="Primary">
             {primaryLinks.map(([label, path]) => <NavLink key={path} to={path} end={path === '/'} onClick={() => setOpen(false)}>{label}</NavLink>)}
           </nav>
-          <Link className="search-link" to="/search" aria-label="Search"><Search aria-hidden="true" /></Link>
+          <Link className="search-link" to="/search" aria-label="Search resources" title="Search resources"><Search aria-hidden="true" /></Link>
         </div>
       </header>
       <main id="main-content"><Outlet /></main>
