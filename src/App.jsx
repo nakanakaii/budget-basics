@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import AppShell from './components/AppShell.jsx'
 import PageHero from './components/PageHero.jsx'
-import { primaryLinks } from './data/navigation.js'
 import HomePage from './pages/HomePage.jsx'
 import BudgetingBasicsPage from './pages/BudgetingBasicsPage.jsx'
 import InfographicsPage from './pages/InfographicsPage.jsx'
@@ -18,8 +17,8 @@ import AboutPage from './pages/AboutPage.jsx'
 import FeedbackPage from './pages/FeedbackPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 
-function Placeholder({ name }) {
-  return <PageHero eyebrow="Learning module" title={`${name} module coming soon`}><p>This area is reserved for the upcoming {name.toLowerCase()} learning module.</p></PageHero>
+function NotFound() {
+  return <PageHero eyebrow="404" title="Page not found"><p>The requested page does not exist. Use the navigation to continue learning.</p></PageHero>
 }
 
 function App() {
@@ -38,11 +37,10 @@ function App() {
         <Route path="about" element={<AboutPage />} />
         <Route path="feedback" element={<FeedbackPage />} />
         <Route path="contact" element={<ContactPage />} />
-        {primaryLinks.slice(1).filter(([, path]) => !['/budgeting-basics', '/needs-vs-wants', '/money-mistakes', '/infographics', '/50-30-20', '/savings-goals', '/expense-planner', '/chatbot', '/about', '/feedback', '/contact'].includes(path)).map(([name, path]) => <Route key={path} path={path} element={<Placeholder name={name} />} />)}
         <Route path="search" element={<SearchPage />} />
         <Route path="sitemap" element={<SitemapPage />} />
         <Route path="privacy" element={<PrivacyPage />} />
-        <Route path="*" element={<Placeholder name="Page not found" />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   )

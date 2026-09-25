@@ -71,6 +71,12 @@ describe('BudgetBasics app shell', () => {
     expect(screen.getByRole('heading', { level: 1, name: heading })).toBeInTheDocument()
   })
 
+  it('renders an honest not-found page for unknown routes', () => {
+    renderApp('/missing-page')
+    expect(screen.getByRole('heading', { level: 1, name: /page not found/i })).toBeInTheDocument()
+    expect(screen.queryByText(/coming soon/i)).not.toBeInTheDocument()
+  })
+
   it('shows a safe back-to-top control after scrolling', async () => {
     const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
     renderApp()

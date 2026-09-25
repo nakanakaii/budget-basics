@@ -40,6 +40,8 @@ describe('discovery and support pages', () => {
     }
     await user.click(screen.getByRole('button', { name: 'What is a need?' }))
     expect(await screen.findByText(/supports basic living, study, or safety/i)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /^helpful$/i }))
+    expect(screen.getByRole('status')).toHaveTextContent(/thanks for your feedback/i)
     await user.type(screen.getByRole('textbox', { name: /ask a money question/i }), 'How do I make a budget?')
     await user.click(screen.getByRole('button', { name: 'Ask' }))
     expect(await screen.findByText(/cover needs first/i)).toBeInTheDocument()
