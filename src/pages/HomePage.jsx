@@ -7,10 +7,10 @@ import TipTicker from '../components/TipTicker.jsx'
 import { tips } from '../data/content.js'
 
 const actions = [
-  ['Build a budget', '/budgeting-basics', WalletCards],
-  ['Sort needs and wants', '/needs-vs-wants', Scale],
-  ['Set a savings goal', '/savings-goals', PiggyBank],
-  ['Plan my expenses', '/expense-planner', Lightbulb],
+  ['Build a budget', '/learn/budgeting-basics', WalletCards],
+  ['Sort needs and wants', '/learn/needs-vs-wants', Scale],
+  ['Set a savings goal', '/practice/savings-goals', PiggyBank],
+  ['Plan my expenses', '/practice/expense-planner', Lightbulb],
 ]
 
 export default function HomePage() {

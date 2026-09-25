@@ -12,10 +12,10 @@ afterEach(cleanup)
 describe('interactive learning pages', () => {
   it('links learning resources to registered app routes', () => {
     expect(Object.fromEntries(resources.map(({ id, path }) => [id, path]))).toMatchObject({
-      'student-budget': '/budgeting-basics',
-      'spending-check': '/needs-vs-wants',
-      'goal-steps': '/savings-goals',
-      'mistake-review': '/money-mistakes',
+      'student-budget': '/learn/budgeting-basics',
+      'spending-check': '/learn/needs-vs-wants',
+      'goal-steps': '/practice/savings-goals',
+      'mistake-review': '/learn/money-mistakes',
     })
   })
 

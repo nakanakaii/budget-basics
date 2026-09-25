@@ -1,14 +1,19 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { StrictMode } from 'react'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App.jsx'
 import LocalClock from './components/LocalClock.jsx'
 
+function LocationProbe() {
+  return <output data-testid="location">{useLocation().pathname}</output>
+}
+
 const renderApp = (path = '/') => render(
   <MemoryRouter initialEntries={[path]}>
     <App />
+    <LocationProbe />
   </MemoryRouter>,
 )
 
@@ -54,13 +59,15 @@ describe('BudgetBasics app shell', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('renders standalone links and the three grouped navigation triggers', () => {
+  it('renders canonical navigation in the required order', () => {
     renderApp()
     const navigation = screen.getByRole('navigation', { name: /primary/i })
 
-    for (const label of ['Home', 'Budget Calculator', 'AI Assistant', 'About', 'Feedback', 'Contact']) {
-      expect(Array.from(navigation.querySelectorAll('a')).find((link) => link.textContent === label)).toBeInTheDocument()
-    }
+    expect(Array.from(navigation.children, (item) => item.matches('a') ? item.textContent : item.querySelector(':scope > button').textContent)).toEqual([
+      'Home', 'Learn Budgeting', 'Practice Planning', 'Explore Resources',
+      'Budget Calculator', 'AI Assistant', 'About', 'Feedback', 'Contact',
+    ])
+    expect(navigation.querySelector('a[href="/budget-calculator"]')).toHaveTextContent('Budget Calculator')
     for (const label of ['Learn Budgeting', 'Practice Planning', 'Explore Resources']) {
       const trigger = screen.getByRole('button', { name: label })
       expect(trigger).toHaveAttribute('aria-expanded', 'false')
@@ -75,18 +82,20 @@ describe('BudgetBasics app shell', () => {
     await user.click(screen.getByRole('button', { name: 'Learn Budgeting' }))
     const learn = document.getElementById(screen.getByRole('button', { name: 'Learn Budgeting' }).getAttribute('aria-controls'))
     expect(Array.from(learn.querySelectorAll('a'), (link) => [link.textContent, link.getAttribute('href')])).toEqual([
-      ['Budgeting Basics', '/budgeting-basics'], ['Needs vs. Wants', '/needs-vs-wants'],
-      ['Savings Goals', '/savings-goals'], ['Expense Planner', '/expense-planner'], ['Money Mistakes', '/money-mistakes'],
+      ['Budgeting Basics', '/learn/budgeting-basics'], ['Needs vs. Wants', '/learn/needs-vs-wants'],
+      ['Savings Goals', '/learn/savings-goals'], ['Expense Planner', '/learn/expense-planner'], ['Money Mistakes', '/learn/money-mistakes'],
     ])
 
     await user.click(screen.getByRole('button', { name: 'Practice Planning' }))
     const practice = document.getElementById(screen.getByRole('button', { name: 'Practice Planning' }).getAttribute('aria-controls'))
-    expect(Array.from(practice.querySelectorAll('a'), (link) => link.textContent)).toEqual(['Savings Goals', 'Expense Planner', 'Money Mistakes'])
+    expect(Array.from(practice.querySelectorAll('a'), (link) => [link.textContent, link.getAttribute('href')])).toEqual([
+      ['Savings Goals', '/practice/savings-goals'], ['Expense Planner', '/practice/expense-planner'], ['Money Mistakes', '/practice/money-mistakes'],
+    ])
 
     await user.click(screen.getByRole('button', { name: 'Explore Resources' }))
     const explore = document.getElementById(screen.getByRole('button', { name: 'Explore Resources' }).getAttribute('aria-controls'))
     expect(Array.from(explore.querySelectorAll('a'), (link) => [link.textContent, link.getAttribute('href')])).toEqual([
-      ['Infographics & Gallery', '/infographics'], ['Search, Sort & Filters', '/search'],
+      ['Infographics & Gallery', '/resources/infographics'], ['Search, Sort & Filters', '/resources/search'],
     ])
   })
 
@@ -105,13 +114,16 @@ describe('BudgetBasics app shell', () => {
     expect(practice).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('marks a group active when the current route is one of its children', () => {
-    renderApp('/budgeting-basics')
+  it.each([
+    ['/learn/budgeting-basics', 'Learn Budgeting'],
+    ['/practice/savings-goals', 'Practice Planning'],
+    ['/resources/infographics', 'Explore Resources'],
+  ])('marks the parent group active for %s', (path, group) => {
+    renderApp(path)
 
     const navigation = screen.getByRole('navigation', { name: /primary/i })
-    expect(navigation.querySelector('a[href="/budgeting-basics"]')).toHaveAttribute('aria-current', 'page')
-    expect(screen.getByRole('button', { name: 'Learn Budgeting' })).toHaveAttribute('data-active', 'true')
-    expect(screen.getByRole('heading', { name: /budgeting basics/i })).toBeInTheDocument()
+    expect(navigation.querySelector(`a[href="${path}"]`)).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByRole('button', { name: group })).toHaveAttribute('data-active', 'true')
   })
 
   it('closes an open group after a child route change and closes the mobile menu', async () => {
@@ -121,7 +133,7 @@ describe('BudgetBasics app shell', () => {
     const group = screen.getByRole('button', { name: 'Learn Budgeting' })
     await user.click(menu)
     await user.click(group)
-    await user.click(screen.getByRole('navigation', { name: /primary/i }).querySelector('a[href="/budgeting-basics"]'))
+    await user.click(screen.getByRole('navigation', { name: /primary/i }).querySelector('a[href="/learn/budgeting-basics"]'))
 
     expect(group).toHaveAttribute('aria-expanded', 'false')
     expect(menu).toHaveAttribute('aria-expanded', 'false')
@@ -149,10 +161,25 @@ describe('BudgetBasics app shell', () => {
     const sitemap = screen.getByRole('main')
     const paths = Array.from(sitemap.querySelectorAll('a'), (link) => link.getAttribute('href'))
     expect(paths).toEqual(expect.arrayContaining([
-      '/', '/budgeting-basics', '/needs-vs-wants', '/50-30-20', '/savings-goals', '/expense-planner',
-      '/money-mistakes', '/infographics', '/chatbot', '/about', '/feedback', '/contact',
-      '/search', '/sitemap', '/privacy',
+      '/', '/learn/budgeting-basics', '/learn/needs-vs-wants', '/learn/savings-goals', '/learn/expense-planner',
+      '/learn/money-mistakes', '/practice/savings-goals', '/practice/expense-planner', '/practice/money-mistakes',
+      '/resources/infographics', '/resources/search', '/budget-calculator', '/chatbot', '/about', '/feedback',
+      '/contact', '/sitemap', '/privacy',
     ]))
+  })
+
+  it.each([
+    ['/budgeting-basics', '/learn/budgeting-basics'],
+    ['/needs-vs-wants', '/learn/needs-vs-wants'],
+    ['/savings-goals', '/practice/savings-goals'],
+    ['/expense-planner', '/practice/expense-planner'],
+    ['/money-mistakes', '/learn/money-mistakes'],
+    ['/infographics', '/resources/infographics'],
+    ['/search', '/resources/search'],
+    ['/50-30-20', '/budget-calculator'],
+  ])('redirects legacy route %s to %s', (legacy, canonical) => {
+    renderApp(legacy)
+    expect(screen.getByTestId('location')).toHaveTextContent(canonical)
   })
 
   it('renders an honest not-found page for unknown routes', () => {

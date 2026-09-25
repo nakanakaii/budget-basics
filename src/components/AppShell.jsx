@@ -63,7 +63,7 @@ export default function AppShell() {
               )
             })}
           </nav>
-          <Link className="search-link" to="/search" aria-label="Search resources" title="Search resources"><Search aria-hidden="true" /></Link>
+          <Link className="search-link" to="/resources/search" aria-label="Search resources" title="Search resources"><Search aria-hidden="true" /></Link>
         </div>
       </header>
       <main id="main-content"><Outlet /></main>
@@ -71,7 +71,7 @@ export default function AppShell() {
         <div className="footer-grid">
           <div><Logo /><p>Friendly, practical money education for everyday decisions.</p></div>
           <nav aria-label="Footer">{primaryLinks.map(([label, path]) => <Link key={path} to={path}>{label}</Link>)}</nav>
-          <nav aria-label="Legal"><Link to="/search">Search</Link><Link to="/sitemap">Sitemap</Link><Link to="/privacy">Privacy notice</Link></nav>
+          <nav aria-label="Legal"><Link to="/resources/search">Search</Link><Link to="/sitemap">Sitemap</Link><Link to="/privacy">Privacy notice</Link></nav>
         </div>
         <p className="copyright">© {new Date().getFullYear()} BudgetBasics. Learn, plan, grow.</p>
       </footer>
