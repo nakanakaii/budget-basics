@@ -1,12 +1,22 @@
 [
   {
+    "topic": "greeting",
+    "keywords": ["hi", "hello", "hey", "salam", "good morning", "good evening"],
+    "answer": "Hello! How can I help you with your budget today?"
+  },
+  {
     "topic": "fundamentals",
     "keywords": ["fundamental", "personal finance basics"],
     "answer": "Personal finance starts with understanding income, tracking expenses, planning a budget, and saving toward clear goals."
   },
   {
     "topic": "income-expenses",
-    "keywords": ["income and expenses", "income vs expenses", "income", "expenses differ"],
+    "keywords": [
+      "income and expenses",
+      "income vs expenses",
+      "income",
+      "expenses differ"
+    ],
     "answer": "Income is money received; expenses are money spent. A sustainable plan keeps expenses within income."
   },
   {

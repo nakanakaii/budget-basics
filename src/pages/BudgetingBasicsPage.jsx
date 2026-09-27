@@ -1,9 +1,108 @@
-import KnowledgeCheck from '../components/KnowledgeCheck.jsx'
-import PageHero from '../components/PageHero.jsx'
-import { concepts } from '../data/content.js'
+import KnowledgeCheck from "../components/KnowledgeCheck.jsx";
+import PageHero from "../components/PageHero.jsx";
+import { concepts } from "../data/content.js";
 
-const budget = [['Income: weekend job', 1200], ['Transport pass', -200], ['Basic groceries', -350], ['Phone plan', -100], ['Study supplies', -100], ['Entertainment', -150], ['Savings', -300]]
+const budget = [
+  ["Income: part-time work", 120000],
+  ["Transport", -18000],
+  ["Basic groceries", -35000],
+  ["Phone plan", -10000],
+  ["Study supplies", -10000],
+  ["Entertainment", -12000],
+  ["Savings", -35000],
+];
 
 export default function BudgetingBasicsPage() {
-  return <><PageHero eyebrow="Learning module" title="Budgeting Basics"><p>A budget is a simple plan for directing income toward expenses, savings, needs, and wants before money disappears.</p></PageHero><section className="example-split"><div><h2>Why budgeting matters</h2><p>A budget helps you cover essentials, prepare for goals, and make spending choices before your money runs out.</p></div><div><h2>How to build a budget</h2><ol aria-label="Ordered steps"><li>List all expected income.</li><li>List fixed and variable expenses.</li><li>Protect needs before wants.</li><li>Choose a savings amount.</li><li>Check that planned spending and savings do not exceed income, then review monthly.</li></ol></div></section><section aria-labelledby="terms-title"><h2 id="terms-title">Six building blocks</h2><div className="concept-grid">{concepts.map(({ id, title, summary, studentExample }) => <article key={id}><h3>{title}</h3><p>{summary}</p><p><strong>Student example:</strong> {studentExample}</p></article>)}</div></section><section className="example-split" aria-labelledby="example-title"><div><p className="eyebrow">Student example</p><h2 id="example-title">Mona plans her month</h2><p>Mona earns a clearly labeled sample income of 1,200 SAR from weekend work. She protects essentials first, leaves a realistic amount for fun, and saves 300 SAR toward a laptop.</p><div className="budget-bar" aria-label="Sample budget distribution: 750 SAR needs, 150 SAR wants, 300 SAR savings"><span style={{ width: '62.5%' }}>Needs</span><span style={{ width: '12.5%' }}>Wants</span><span style={{ width: '25%' }}>Savings</span></div></div><table aria-label="Sample monthly student budget"><caption>Sample monthly student budget (SAR)</caption><thead><tr><th scope="col">Category</th><th scope="col">Amount</th></tr></thead><tbody>{budget.map(([label, amount]) => <tr key={label}><th scope="row">{label}</th><td>{amount > 0 ? '+' : ''}{amount} SAR</td></tr>)}</tbody><tfoot><tr><th scope="row">Money left</th><td>0 SAR</td></tr></tfoot></table></section><KnowledgeCheck /></>
+  return (
+    <>
+      <PageHero eyebrow="Learning module" title="Budgeting Basics">
+        <p>
+          A budget is a simple plan for directing income toward expenses,
+          savings, needs, and wants before money disappears.
+        </p>
+      </PageHero>
+      <section className="example-split">
+        <div>
+          <h2>Why budgeting matters</h2>
+          <p>
+            A budget helps you cover essentials, prepare for goals, and make
+            spending choices before your money runs out.
+          </p>
+        </div>
+        <div>
+          <h2>How to build a budget</h2>
+          <ol aria-label="Ordered steps">
+            <li>List all expected income.</li>
+            <li>List fixed and variable expenses.</li>
+            <li>Protect needs before wants.</li>
+            <li>Choose a savings amount.</li>
+            <li>
+              Check that planned spending and savings do not exceed income, then
+              review monthly.
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section aria-labelledby="terms-title">
+        <h2 id="terms-title">Six building blocks</h2>
+        <div className="concept-grid">
+          {concepts.map(({ id, title, summary, studentExample }) => (
+            <article key={id}>
+              <h3>{title}</h3>
+              <p>{summary}</p>
+              <p>
+                <strong>Student example:</strong> {studentExample}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="example-split" aria-labelledby="example-title">
+        <div>
+          <p className="eyebrow">Student example</p>
+          <h2 id="example-title">Mona plans her month</h2>
+          <p>
+            Mona receives a clearly labeled sample income of 120,000 YER from
+            part-time work. She protects essentials first, leaves a realistic
+            amount for fun, and saves 35,000 YER toward a laptop.
+          </p>
+          <div
+            className="budget-bar"
+            aria-label="Sample budget distribution in Yemeni rial"
+          >
+            <span style={{ width: "62.5%" }}>Needs</span>
+            <span style={{ width: "12.5%" }}>Wants</span>
+            <span style={{ width: "25%" }}>Savings</span>
+          </div>
+        </div>
+        <table aria-label="Sample monthly student budget">
+          <caption>Sample monthly student budget (YER)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {budget.map(([label, amount]) => (
+              <tr key={label}>
+                <th scope="row">{label}</th>
+                <td>
+                  {amount > 0 ? "+" : ""}
+                  {amount} YER
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Money left</th>
+              <td>0 YER</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+      <KnowledgeCheck />
+    </>
+  );
 }

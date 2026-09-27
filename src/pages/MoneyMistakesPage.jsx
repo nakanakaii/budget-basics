@@ -1,8 +1,90 @@
-import { useState } from 'react'
-import PageHero from '../components/PageHero.jsx'
-import { moneyMistakes } from '../data/content.js'
+import { useState } from "react";
+import PageHero from "../components/PageHero.jsx";
+import { moneyMistakes } from "../data/content.js";
 
 export default function MoneyMistakesPage() {
-  const [open, setOpen] = useState(null)
-  return <><PageHero eyebrow="Learning module" title="Five common money mistakes"><p>Money mistakes are repeated choices that quietly weaken a budget or delay a goal. Recognize the pattern, understand its cost, and prevent it next time.</p></PageHero><section className="example-split"><div><h2>Why prevention matters</h2><p>Small habits repeat. Catching one early protects essential spending and makes recovery less costly.</p><h2>Student example</h2><p>Sami notices daily delivery fees are delaying his textbook goal. He records a week of purchases, packs lunch twice, and moves the saved amount to his goal.</p></div><div><h2>How to prevent money mistakes</h2><ol aria-label="Ordered steps"><li>Notice the spending pattern and name the trigger.</li><li>Record the real cost and its consequence.</li><li>Choose one practical response.</li><li>Add a reminder, limit, or waiting rule that prevents a repeat.</li><li>Review the result each week and adjust.</li></ol></div></section><section className="accordion" aria-label="Common money mistakes">{moneyMistakes.map(({ title, explanation, scenario, consequence, action, prevention }, index) => { const expanded = open === index; const panel = `mistake-${index}`; return <article key={title}><h2><button type="button" aria-expanded={expanded} aria-controls={panel} onClick={() => setOpen(expanded ? null : index)}><span>{title}</span><span aria-hidden="true">{expanded ? '−' : '+'}</span></button></h2>{expanded && <div id={panel} className="accordion-panel"><p><strong>Explanation:</strong> {explanation}</p><p><strong>Scenario:</strong> {scenario}</p><p><strong>Consequence:</strong> {consequence}</p><p><strong>Corrective action:</strong> {action}</p><p><strong>Prevention:</strong> {prevention}</p></div>}</article>})}</section></>
+  const [open, setOpen] = useState(null);
+  return (
+    <>
+      <PageHero eyebrow="Learning module" title="Five common money mistakes">
+        <p>
+          Money mistakes are repeated choices that quietly weaken a budget or
+          delay a goal. Recognize the pattern, understand its cost, and prevent
+          it next time.
+        </p>
+      </PageHero>
+      <section className="example-split">
+        <div>
+          <h2>Why prevention matters</h2>
+          <p>
+            Small habits repeat. Catching one early protects essential spending
+            and makes recovery less costly.
+          </p>
+          <h2>Student example</h2>
+          <p>
+            Sami notices daily delivery fees are delaying his textbook goal. He
+            records a week of purchases, packs lunch twice, and moves the saved
+            amount to his goal.
+          </p>
+        </div>
+        <div>
+          <h2>How to prevent money mistakes</h2>
+          <ol aria-label="Ordered steps">
+            <li>Notice the spending pattern and name the trigger.</li>
+            <li>Record the real cost and its consequence.</li>
+            <li>Choose one practical response.</li>
+            <li>
+              Add a reminder, limit, or waiting rule that prevents a repeat.
+            </li>
+            <li>Review the result each week and adjust.</li>
+          </ol>
+        </div>
+      </section>
+      <section className="accordion" aria-label="Common money mistakes">
+        {moneyMistakes.map(
+          (
+            { title, explanation, scenario, consequence, action, prevention },
+            index,
+          ) => {
+            const expanded = open === index;
+            const panel = `mistake-${index}`;
+            return (
+              <article key={title}>
+                <h2>
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    aria-controls={panel}
+                    onClick={() => setOpen(expanded ? null : index)}
+                  >
+                    <span>{title}</span>
+                    <span aria-hidden="true">{expanded ? "−" : "+"}</span>
+                  </button>
+                </h2>
+                {expanded && (
+                  <div id={panel} className="accordion-panel">
+                    <p>
+                      <strong>Explanation:</strong> {explanation}
+                    </p>
+                    <p>
+                      <strong>Scenario:</strong> {scenario}
+                    </p>
+                    <p>
+                      <strong>Consequence:</strong> {consequence}
+                    </p>
+                    <p>
+                      <strong>Corrective action:</strong> {action}
+                    </p>
+                    <p>
+                      <strong>Prevention:</strong> {prevention}
+                    </p>
+                  </div>
+                )}
+              </article>
+            );
+          },
+        )}
+      </section>
+    </>
+  );
 }

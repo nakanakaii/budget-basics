@@ -5,5 +5,5 @@ export default function PageHero({ eyebrow, title, children }) {
       <h1>{title}</h1>
       {children}
     </header>
-  )
+  );
 }
